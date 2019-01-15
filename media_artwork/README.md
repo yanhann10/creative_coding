@@ -11,7 +11,7 @@ The Venetian-glass made lamps remind me of Thai lantern festival where thousands
 [Here's a link to the piece](https://borderless.teamlab.art)
 
 ### Art Piece 2
-![AI tulips](images/tulip.mp4?raw=true "tulips")  
+![AI tulips](images/mosaicvirus?raw=true "tulips")  
 
 This is the second art piece that I like – Mosaic Virus by artist Anna Ridler commissioned by Impakt Festival. In the AI-powered video artwork, the tulips bloom and wane according to bitcoin price. It transformed literally the comments of a Dutch banker who drew parallel between Bitcoin's bubbles with the historical event of 'tulip mania' where a virus caused the tumultuous rise and fall of tulip prices. 
 
