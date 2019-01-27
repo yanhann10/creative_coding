@@ -6,11 +6,12 @@ function setup() {
 }
 
 function draw() {
+  background(255);
   let doff=0;
   
   for (i=0; i<10; i++) {
     //color in different shade
-    fill(0,0,155-20*i);
+    fill(0,0,214-16*i);
     //make the distance random  
     wave(map(noise(doff),0,1,6,30)*i);
     doff+=0.1;
@@ -19,14 +20,12 @@ function draw() {
 
 
 function wave(distance){
-  
-
   beginShape();
   let xoff = 0; 
   // Iterate over horizontal pixels
   for (let x = 0; x <= width; x += 6) {
     // Calculate a y value according to noise, map to
-    let y = map(noise(xoff), 0, 1, 100,200) + 
+    let y = map(noise(xoff,yoff), 0, 1, 100,200) + 
     //add a minor sin term for some waves
       map(sin(x),-1,1,0,20);
     // Set the vertex
@@ -35,7 +34,7 @@ function wave(distance){
     xoff += 0.05;
     }
   // increment y dimension for noise
-  yoff += 0.01;
+  yoff += 0.002;
   
   vertex(width, height);
   vertex(0, height);
