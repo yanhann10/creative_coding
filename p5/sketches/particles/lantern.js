@@ -8,9 +8,11 @@ function setup() {
       angleMode(DEGREES);
       for(let i=0; i<num_petals; i++) {
           petals[i] = new Petal(random(-1.5*w,1.5*w),random(h,2*h),
-            random(6,12), //size
+            random(8,14), //size
             random(1, 3), //speed
-            100);
+            100, //direction
+            random(-4,4)/10 //tilt angle
+            );
       }
   
   }
@@ -27,13 +29,14 @@ function setup() {
 
   class Petal {
     //hold all variables 
-    constructor(tempX, tempY, tempW, tempSpeed,tempDirection) {
+    constructor(tempX, tempY, tempW, tempSpeed,tempDirection, tempTilt) {
         this.x=tempX;
         this.y=tempY;
         this.width=tempW;
         this.height=tempW;
         this.speed=tempSpeed;
         this.direction=tempDirection;
+        this.tilt=tempTilt;
     }
 
     move(t){
@@ -58,16 +61,18 @@ function setup() {
         //vary the color based on size
         let shade=this.width/12;
         fill(shade*204, shade*87,shade*43);
-        quad(this.x-1.2*this.width, this.y-2*this.height,
-            this.x+1.2*this.width, this.y-2*this.height,
-            this.x+this.width/1.7, this.y,
-            this.x-this.width/1.7, this.y
+        rotate(this.tilt);
+        quad(this.x-this.width, this.y-1.8*this.height,
+            this.x+this.width, this.y-1.8*this.height,
+            this.x+this.width/1.8, this.y,
+            this.x-this.width/1.8, this.y
             );
-            
-       // rect(this.x-this.width, this.y-2*this.height, 
-           // 2*this.width, 3*this.height);
         fill(226,178,57);
-        ellipse(this.x, this.y, this.width, 0.6*this.width);
+        ellipse(this.x, this.y, this.width, 0.4*this.width);
+        noStroke();
+        //the flame
+        fill(250,239,129);
+        ellipse(this.x, this.y, this.width/5, 0.4*this.width/3);
     }
 
   }
