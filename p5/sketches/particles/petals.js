@@ -3,20 +3,15 @@ let img;
 let petals =[];
 let snowflakes =[];
 
-let num_petals = 40;
-let num_snowflakes =20;
+let num_petals = 100;
 
 function setup() {
     createCanvas(400, 400);
       angleMode(DEGREES);
-
       for(let i=0; i<num_petals; i++) {
-          petals[i] = new Petal(random(0,800),random(0,800),30,30,random(0.1, 2));
+          petals[i] = new Petal(random(0,800),random(-100,0),
+            random(6,15), random(1, 3));
       }
-
-      for(let i=0; i<num_snowflakes; i++) {
-        petals[i] = new Petal(random(0,800),random(0,800),60,60,random(0.1, 2));
-    }
   
   }
 
@@ -26,24 +21,22 @@ function setup() {
       background(0);
     for(let i=0; i<num_petals; i++) {
         petals[i].display();
-        petals[i].move();
-        petals[i].blink();
+        petals[i].move(frameCount/60);
     }
   }
 
   class Petal {
     //hold all variables 
-    constructor(tempX, tempY, tempW, tempH, tempSpeed) {
+    constructor(tempX, tempY, tempW, tempSpeed) {
         this.x=tempX;
         this.y=tempY;
         this.width=tempW;
-        this.height=tempH;
+        this.height=tempW;
         this.speed=tempSpeed;
     }
 
-    move(){
-        this.x+=100*sin(frameCount/10);
-        this.y +=this.speed;
+    move(t){
+        this.y +=pow(this.width,0.5);
         if (this.y>height){
             this.y=-40;
         }
