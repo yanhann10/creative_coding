@@ -6,16 +6,20 @@ function setup() {
 }
 
 function draw() {
-
- let distance=0
-  wave(distance);
-  wave(10);
-  wave(20);
+  let doff=0;
+  
+  for (i=0; i<10; i++) {
+    //color in different shade
+    fill(0,0,155-20*i);
+    //make the distance random  
+    wave(map(noise(doff),0,1,6,30)*i);
+    doff+=0.1;
+  }
 }
 
 
 function wave(distance){
-  fill(255);
+  
 
   beginShape();
   let xoff = 0; 
@@ -29,9 +33,10 @@ function wave(distance){
     vertex(x, y+distance);
     // Increment x dimension for noise
     xoff += 0.05;
-  }
+    }
   // increment y dimension for noise
   yoff += 0.01;
+  
   vertex(width, height);
   vertex(0, height);
   endShape(CLOSE);
