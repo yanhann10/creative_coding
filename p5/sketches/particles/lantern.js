@@ -8,7 +8,9 @@ function setup() {
       angleMode(DEGREES);
       for(let i=0; i<num_petals; i++) {
           petals[i] = new Petal(random(-1.5*w,1.5*w),random(h,2*h),
-            random(6,12), random(1, 3),100);
+            random(6,12), //size
+            random(1, 3), //speed
+            100);
       }
   
   }
@@ -40,7 +42,11 @@ function setup() {
         if (this.x>w){
             this.x=this.x % w;
         }
-        this.y -=pow(this.width,0.5);
+        if (this.x<0){
+            this.x=w-this.x;
+        }
+        //y speed based on object size
+        this.y -=pow(this.width,0.6);
         if (this.y<0){
             this.y=h;
         }
@@ -49,10 +55,19 @@ function setup() {
 
 
     display(){
-        fill(221,198,200);
-        rect(this.x-this.width, this.y-2*this.height, 
-            2*this.width, 3*this.height);
-        ellipse(this.x, this.y, this.width, this.height);
+        //vary the color based on size
+        let shade=this.width/12;
+        fill(shade*204, shade*87,shade*43);
+        quad(this.x-1.2*this.width, this.y-2*this.height,
+            this.x+1.2*this.width, this.y-2*this.height,
+            this.x+this.width/1.7, this.y,
+            this.x-this.width/1.7, this.y
+            );
+            
+       // rect(this.x-this.width, this.y-2*this.height, 
+           // 2*this.width, 3*this.height);
+        fill(226,178,57);
+        ellipse(this.x, this.y, this.width, 0.6*this.width);
     }
 
   }
