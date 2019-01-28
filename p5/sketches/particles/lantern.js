@@ -3,6 +3,7 @@ let num_petals = 100;
 let w=800;
 let h=600;
 
+
 function setup() {
     createCanvas(w, h);
       angleMode(DEGREES);
@@ -14,13 +15,16 @@ function setup() {
             random(-4,4)/10 //tilt angle
             );
       }
+    c1 = color(204,87,43);
+    c2 = color(226,178,57);
   
   }
 
   //object inheritance: apply action on some objects
   
   function draw() {
-      background(0);
+    background(0);
+
     for(let i=0; i<num_petals; i++) {
         petals[i].display();
         petals[i].move(frameCount/10);
@@ -60,13 +64,25 @@ function setup() {
     display(){
         //vary the color based on size
         let shade=this.width/12;
-        fill(shade*204, shade*87,shade*43);
+        if (mouseIsPressed){
+        //change the color of nearby lanterns
+            if (petals[i].x>400) {
+                fill(shade*145, shade*95,shade*225);
+            }
+            else {}
+        }
+        else {
+            fill(shade*204, shade*87,shade*43);
+        }
+    
+
         rotate(this.tilt);
         quad(this.x-this.width, this.y-1.8*this.height,
             this.x+this.width, this.y-1.8*this.height,
             this.x+this.width/1.8, this.y,
             this.x-this.width/1.8, this.y
             );
+
         fill(226,178,57);
         ellipse(this.x, this.y, this.width, 0.4*this.width);
         noStroke();
@@ -77,3 +93,5 @@ function setup() {
 
   }
 
+//to-do: when mouseispressed create a new lantern object
+//to-do: when mouseispressed change the color of nearby object
