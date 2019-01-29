@@ -1,4 +1,6 @@
-//shapes that resemble the cross-section of a raw colored crystal
+//shapes that resemble the cross-section of cut crystal
+//dense blue rings interspersed by white rings
+
 let fill_color =[];
 let cross=[];
 let cross_num=1;
@@ -12,7 +14,7 @@ function setup() {
   angleMode(DEGREES);
   colorMode(RGB);
   //start n stop of color range
-  let c1 = color(7,15,81); //blue
+  let c1 = color(106,18,210); //purple
   let c2 = color(255); //white
   //for (let i=0; i<cross_num; i++){
                             // x           , y             ,rad, num
@@ -41,7 +43,8 @@ class CrossSec{
     
     display() {
         for (let j=0;j<this.n; j++){
-            let interC = lerpColor(this.c1,this.c2, j/(this.n));
+            //repeat light to dark color gradation
+            let interC = lerpColor(this.c1,this.c2, j%(this.n/2+1)/(this.n/2));
             beginShape();
             push()
             fill(interC);
@@ -58,4 +61,4 @@ class CrossSec{
             }
         }
 }
-
+//to-consider: how to make noise more concentrated in certain range..log?
