@@ -12,8 +12,6 @@ function draw() {
   
   for (i=0; i<10; i++) {
     //color in different shade, vary with time
-    //fill(150-frameCount/10,200,225-16*i-frameCount/3);
-    //fill(29,146-20*i-frameCount/3,214-20*i-frameCount/3);
     fill(0,160-20*i-frameCount/3,214-20*i-frameCount/3);
     //make the distance random  
     wave(map(noise(doff),0,1,20,80)*i);
