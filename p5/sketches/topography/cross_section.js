@@ -65,3 +65,5 @@ class CrossSec{
         }
 }
 //to-consider: how to make noise more concentrated in certain range..log?
+//change speed
+//
