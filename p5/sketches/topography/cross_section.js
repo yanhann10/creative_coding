@@ -14,11 +14,16 @@ function setup() {
   angleMode(DEGREES);
   colorMode(RGB);
   //start n stop of color range
-  let c1 = color(106,18,210); //purple
+  let c1 = [color(106,18,210), color(134, 33, 173), color(201, 27, 95), 
+    color(239, 192, 45), color(68, 78, 179)]; //purple
   let c2 = color(255); //white
   for (let i=0; i<cross_num; i++){
-                            // x           , y             ,rad, num
-    cross[i] = new CrossSec(200*i+100, 300, 80, 5,c1,c2);
+    cross[i] = new CrossSec(200*i+100, //x
+        300, //y
+        80, //radius
+        5, //num of rings
+        c1[i], //dark color
+        c2);
   }
    frameRate(random(3,10));
 }
