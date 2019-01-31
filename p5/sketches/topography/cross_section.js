@@ -3,8 +3,8 @@
 
 let fill_color =[];
 let cross=[];
-let cross_num=1;
-let w=800, h=600;
+let cross_num=5;
+let w=1200, h=600;
 
 
 function setup() {
@@ -16,16 +16,18 @@ function setup() {
   //start n stop of color range
   let c1 = color(106,18,210); //purple
   let c2 = color(255); //white
-  //for (let i=0; i<cross_num; i++){
+  for (let i=0; i<cross_num; i++){
                             // x           , y             ,rad, num
-    sec = new CrossSec(300, 300, 80, 5,c1,c2);
- // }
+    cross[i] = new CrossSec(200*i+100, 300, 80, 5,c1,c2);
+  }
+   frameRate(random(3,10));
 }
 
 function draw() {  
-    //for (let i=0; i<cross_num; i++){
-        sec.display();
-     // }
+    background(0);
+    for (let i=0; i<cross_num; i++){
+        cross[i].display();
+    }
 
 }
 
@@ -42,6 +44,7 @@ class CrossSec{
     }
     
     display() {
+        let mynoiseseed=random(1000);
         for (let j=0;j<this.n; j++){
             //repeat light to dark color gradation
             let interC = lerpColor(this.c1,this.c2, j%(this.n/2+1)/(this.n/2));
@@ -50,14 +53,14 @@ class CrossSec{
             fill(interC);
             translate(this.x, this.y);
             for (let i=0;i<90;i++) {
-                let radius=this.r+ map(noise(i/5),0,1,6,60) - 20 * j;
+                let radius=this.r+ map(noise(mynoiseseed+i/5),0,1,6,60) - 20 * j;
                 let x=sin(4*i);
                 let y=cos(4*i);
                 vertex(radius*x, radius*y);
             }
             endShape(CLOSE);
             pop();
-            noLoop()
+           
             }
         }
 }
