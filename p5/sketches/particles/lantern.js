@@ -18,6 +18,14 @@ function setup() {
     c1 = color(204,87,43);
     c2 = color(226,178,57);
   
+    function mouseIsPressed() {
+        var myPetal=new Petal(mouseX, mouseY,
+        random(8,14), //size
+        random(1, 3), //speed
+        100, //direction
+        random(-4,4)/10);
+        petals.push(myPetal);
+    }
   }
 
   //object inheritance: apply action on some objects
@@ -64,17 +72,16 @@ function setup() {
     display(){
         //vary the color based on size
         let shade=this.width/12;
-        if (mouseIsPressed){
-        //change the color of nearby lanterns
-            if (petals[i].x>400) {
-                fill(shade*145, shade*95,shade*225);
-            }
-            else {}
-        }
-        else {
-            fill(shade*204, shade*87,shade*43);
-        }
-    
+        // if (mouseIsPressed){
+        // //change the color of nearby lanterns
+        //         if (this.x>400) {
+        //             fill(shade*145, shade*95,shade*225);
+        //         }
+        //         else {}
+        // }   
+        // else {
+        //     fill(shade*204, shade*87,shade*43);
+        // }
 
         rotate(this.tilt);
         quad(this.x-this.width, this.y-1.8*this.height,
