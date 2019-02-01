@@ -1,12 +1,12 @@
 //shapes that resemble the cross-section of cut crystal
-
 let fill_color =[];
 let cross=[];
 let cross_num=5;
-let w=1200, h=600;
-
+let w=1200, h=500;
+let frameRt=3;
 
 function setup() {
+  frameRate(frameRt);
   createCanvas(w, h);
   noiseSeed(99);
   background(255);
@@ -18,21 +18,21 @@ function setup() {
   let c2 = color(255); //white
   for (let i=0; i<cross_num; i++){
     cross[i] = new CrossSec(230*i+150, //x
-        300, //y
+        250, //y
         80, //radius
         random(3,7), //num of rings
         c1[i], //dark color
         c2);
   }
-   frameRate(3);
+
 }
 
 function draw() {  
+
     background(0);
     for (let i=0; i<cross_num; i++){
-        cross[i].display();
+        cross[i].display(); 
     }
-
 }
 
 
@@ -49,6 +49,7 @@ class CrossSec{
     
     display() {
         let mynoiseseed=random(1000);
+        let dist=floor(this.r/this.n)
         for (let j=0;j<this.n; j++){
             //repeat light to dark color gradation
             let interC = lerpColor(this.c1,this.c2, j%(this.n/2+1)/(this.n/2));
@@ -57,7 +58,8 @@ class CrossSec{
             fill(interC);
             translate(this.x, this.y);
             for (let i=0;i<90;i++) {
-                let radius=this.r+ map(noise(mynoiseseed+i/5),0,1,6,60) - 20 * j;
+                let radius= map(noise(mynoiseseed+this.r), 0, 1, 18, 128) + 
+                    map((noise(mynoiseseed+i/5)),0,1,10,60) - dist * j;
                 let x=sin(4*i);
                 let y=cos(4*i);
                 vertex(radius*x, radius*y);
@@ -70,4 +72,3 @@ class CrossSec{
 }
 //to-consider: how to make noise more concentrated in certain range..log?
 //change speed
-//
