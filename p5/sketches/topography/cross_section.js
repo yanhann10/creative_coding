@@ -1,5 +1,4 @@
 //shapes that resemble the cross-section of cut crystal
-//dense blue rings interspersed by white rings
 
 let fill_color =[];
 let cross=[];
@@ -14,18 +13,18 @@ function setup() {
   angleMode(DEGREES);
   colorMode(RGB);
   //start n stop of color range
-  let c1 = [color(106,18,210), color(134, 33, 173), color(201, 27, 95), 
-    color(239, 192, 45), color(68, 78, 179)]; //purple
+  let c1 = [color(167,34,110), color(236,32,73), color(242,107,56), 
+    color(247,219,79), color(47,149,153)]; //purple
   let c2 = color(255); //white
   for (let i=0; i<cross_num; i++){
-    cross[i] = new CrossSec(200*i+100, //x
+    cross[i] = new CrossSec(230*i+150, //x
         300, //y
         80, //radius
-        5, //num of rings
+        random(3,7), //num of rings
         c1[i], //dark color
         c2);
   }
-   frameRate(random(3,10));
+   frameRate(3);
 }
 
 function draw() {  
