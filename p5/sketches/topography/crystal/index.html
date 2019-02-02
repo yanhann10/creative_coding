@@ -1,0 +1,39 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <script src="library/p5.min.js"></script>
+  <script src="library/p5.sound.js"></script>
+  <script src="crystal.js"></script>
+  <script type="text/javascript" src="library/dat.gui.min.js"></script>
+  <script>
+    var options = {
+      Background: '#fff',
+      FlowerColor: '#0799f2',
+      Radius: 160
+    }
+    window.onload = function () {
+      let gui = new dat.GUI();
+      //folder1
+      var folder1 = gui.addFolder('Controls');
+
+      var bgcolorControl = folder1.addColor(options, 'Background');
+      bgcolorControl.onChange(draw);
+
+      var color1Control = folder1.addColor(options, 'FlowerColor');
+      color1Control.onChange(draw);
+
+      var RadiusControl = folder1.add(options, 'Radius', 80, 180);
+      RadiusControl.onFinishChange(draw);
+
+      folder1.open();
+
+    }
+  </script>
+</head>
+
+<body>
+  <h1 face="verdana">Sound Flower</h1>
+</body>
+
+</html>
