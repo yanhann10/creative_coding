@@ -8,24 +8,33 @@
     <script>
     
     var options ={  
-      Background : '#0a0a0a'
+      Background : '#fff',
+      FlowerColor : '#0799f2',
+      Radius:160
     }
     window.onload = function() {
       let gui = new dat.GUI();
       //folder1
       var folder1 = gui.addFolder('Controls');
+
       var bgcolorControl = folder1.addColor(options, 'Background');
       bgcolorControl.onChange(draw);
+
+      var color1Control = folder1.addColor(options, 'FlowerColor');
+      color1Control.onChange(draw);
+
+      var RadiusControl = folder1.add(options, 'Radius',80,180);
+      RadiusControl.onFinishChange(draw);
+
       folder1.open();
 
     }
     
-  
-    
+
     
     </script>
   </head>
   <body>
-    <h1>Hello World!</h1>
+    <h1>gui</h1>
   </body>
 </html>

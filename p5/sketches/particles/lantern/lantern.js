@@ -1,5 +1,5 @@
 let lanterns = [];
-let num_lanterns = 100;
+let num_lanterns = 80;
 let w = 800;
 let h = 600;
 
@@ -99,7 +99,7 @@ class lantern {
 
 
 function mousePressed() {
-    let myLantern = new lantern(mouseX, mouseY, 8, //size
+    let myLantern = new lantern(mouseX, mouseY, 16, //size
         random(1, 3), //speed
         100, //direction
         random(-4, 4) / 10 //tilt angle

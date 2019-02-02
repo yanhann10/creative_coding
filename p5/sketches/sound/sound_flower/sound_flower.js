@@ -1,38 +1,35 @@
 //shapes that resemble the cross-section of cut crystal
 let fill_color =[];
-let cross=[];
-let cross_num=1;
 let w=1200, h=500;
 let frameRt=3;
 
 function setup() {
   frameRate(frameRt);
-  createCanvas(w, h);
+  createCanvas(windowWidth, windowHeight);
   noiseSeed(99);
   background(255);
   angleMode(DEGREES);
   colorMode(RGB);
   //start n stop of color range
-  let c1 = [color(167,34,110), color(236,32,73), color(242,107,56), 
-    color(247,219,79), color(47,149,153)]; //purple
+  let c1 = color(167,34,110); //purple
   let c2 = color(255); //white
-  for (let i=0; i<cross_num; i++){
-    cross[i] = new CrossSec(230*i+150, //x
-        250, //y
-        80, //radius
+
+    cross = new CrossSec(windowWidth/2, //x
+        windowHeight/2-100, //y
+        options.Radius, //radius
         random(3,7), //num of rings
-        c1[i], //dark color
+        c1, //dark color
         c2);
   }
 
-}
+
 
 function draw() {  
 
     background(options.Background);
-    for (let i=0; i<cross_num; i++){
-        cross[i].display(); 
-    }
+
+        cross.display(); 
+
 }
 
 
@@ -58,7 +55,8 @@ class CrossSec{
             fill(interC);
             translate(this.x, this.y);
             for (let i=0;i<90;i++) {
-                let radius= map(noise(mynoiseseed+this.r), 0, 1, 18, 128) + 
+                let radius= options.Radius + 
+                //this.r doesn't work here
                     map((noise(mynoiseseed+i/5)),0,1,10,60) - dist * j;
                 let x=sin(4*i);
                 let y=cos(4*i);
