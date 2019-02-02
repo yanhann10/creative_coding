@@ -4,7 +4,29 @@
     <script src="library/p5.min.js"></script>
     <script src="library/p5.sound.js"></script>
     <script src="sound_flower.js"></script>
-    <script></script>
+    <script type="text/javascript" src="library/dat.gui.min.js"></script>
+    <script>
+    
+    var options ={  
+      Background : '#0a0a0a'
+    }
+    window.onload = function() {
+      let gui = new dat.GUI();
+      //folder1
+      var folder1 = gui.addFolder('Controls');
+      var bgcolorControl = folder1.addColor(options, 'Background');
+      bgcolorControl.onChange(draw);
+      folder1.open();
+
+    }
+    
+    
+    
+    
+    
+    
+    
+    </script>
   </head>
   <body>
     <h1>Hello World!</h1>

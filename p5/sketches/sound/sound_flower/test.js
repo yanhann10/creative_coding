@@ -1,11 +1,17 @@
-//shapes that resemble the cross-section of cut crystal
+//  Mic input
+
 let fill_color =[];
-let cross=[];
-let cross_num=1;
+let cross_num=5;
 let w=1200, h=500;
 let frameRt=3;
+let input;
 
 function setup() {
+  createCanvas(480, 270);
+  //sound
+  //input = new p5.AudioIn();
+  //input.start();
+  //initiate object
   frameRate(frameRt);
   createCanvas(w, h);
   noiseSeed(99);
@@ -16,24 +22,30 @@ function setup() {
   let c1 = [color(167,34,110), color(236,32,73), color(242,107,56), 
     color(247,219,79), color(47,149,153)]; //purple
   let c2 = color(255); //white
-  for (let i=0; i<cross_num; i++){
-    cross[i] = new CrossSec(230*i+150, //x
-        250, //y
-        80, //radius
-        random(3,7), //num of rings
-        c1[i], //dark color
-        c2);
-  }
 
+
+
+
+
+function draw() {
+  background(200);
+
+  // Get the overall volume (between 0 and 1.0)
+  //var vol = input.getLevel();
+  fill(127);
+  stroke(0);
+  let cross = new CrossSec(230, //x
+    250, //y
+    80, //radius
+    random(3,7), //num of rings
+    c1[0], //dark color
+    c2);
 }
 
-function draw() {  
-
-    background(options.Background);
-    for (let i=0; i<cross_num; i++){
-        cross[i].display(); 
-    }
+  cross.display(); 
 }
+
+
 
 
 class CrossSec{
@@ -66,7 +78,7 @@ class CrossSec{
             }
             endShape(CLOSE);
             pop();
-            noLoop();
+           
             }
         }
-      }
+}
