@@ -11,11 +11,11 @@ function setup() {
   angleMode(DEGREES);
   colorMode(RGB);
   //start n stop of color range
-  let c1 = color(167,34,110); //purple
+  let c1 = color(52, 136,60); //green
   let c2 = color(255); //white
 
     cross = new CrossSec(windowWidth/2, //x
-        windowHeight/2-100, //y
+        windowHeight/2-10, //y
         options.Radius, //radius
         random(3,7), //num of rings
         c1, //dark color
@@ -57,7 +57,8 @@ class CrossSec{
             for (let i=0;i<90;i++) {
                 let radius= options.Radius + 
                 //this.r doesn't work here
-                    map((noise(mynoiseseed+i/5)),0,1,10,60) - dist * j;
+                    map((noise(mynoiseseed+i/1.8)),0,1,10,180) 
+                    - dist * j;
                 let x=sin(4*i);
                 let y=cos(4*i);
                 vertex(radius*x, radius*y);
