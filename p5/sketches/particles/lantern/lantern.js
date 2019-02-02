@@ -1,6 +1,6 @@
 
-let petals =[];
-let num_petals = 100;
+let lanterns =[];
+let num_lanterns = 100;
 let w=800;
 let h=600;
 
@@ -8,8 +8,8 @@ let h=600;
 function setup() {
     createCanvas(w, h);
       angleMode(DEGREES);
-      for(let i=0; i<num_petals; i++) {
-          petals[i] = new Petal(random(-1.5*w,1.5*w),random(h,2*h),
+      for(let i=0; i<num_lanterns; i++) {
+          lanterns[i] = new lantern(random(-1.5*w,1.5*w),random(h,2*h),
             random(8,14), //size
             random(1, 3), //speed
             100, //direction
@@ -19,26 +19,30 @@ function setup() {
     c1 = color(204,87,43);
     c2 = color(226,178,57);
   
-    // function mouseIsPressed() {
-    //     var myPetal=new Petal(mouseX, mouseY,
-    //     random(8,14), //size
-    //     random(1, 3), //speed
-    //     100, //direction
-    //     random(-4,4)/10);
-    //     petals.push(myPetal);
-    // }
+
   }
   
   function draw() {
     background(0);
 
-    for(let i=0; i<num_petals; i++) {
-        petals[i].display();
-        petals[i].move(frameCount/10);
+
+
+    function mouseIsPressed() {
+        let myLantern=new lantern(mouseX, mouseY, 8, //size
+            random(1, 3), //speed
+            100, //direction
+            random(-4,4)/10 //tilt angle
+            )
+            lanterns.push(myLantern);
+      }
+
+      for(let i=0; i<num_lanterns; i++) {
+        lanterns[i].display();
+        lanterns[i].move(frameCount/10);
     }
   }
 
-  class Petal {
+  class lantern {
     //hold all variables 
     constructor(tempX, tempY, tempW, tempSpeed,tempDirection, tempTilt) {
         this.x=tempX;
@@ -70,18 +74,14 @@ function setup() {
 
     display(){
         //vary the color based on size
-    //     let shade=this.width/12;
-    //     //if (mouseIsPressed){
-    //     //change the color of nearby lanterns
-    //             if (this.x>400) {
-    //                 fill(shade*145, shade*95,shade*225);
-    //             }
-    //            // else {}
-    //     }   
-    //    // else {
-    //        // fill(shade*204, shade*87,shade*43);
-    //    // }
-        fill(253, 105, 2);
+        let shade=this.width/12;
+        fill(shade*253, shade*105, shade*2);
+
+        //change the color of those near the mouse
+        let dst= dist(this.x, this.y, mouseX, mouseY);
+        if (dst<120) {
+            fill(shade*167,shade*34,shade*110);
+        }
 
         rotate(this.tilt);
         quad(this.x-this.width, this.y-1.8*this.height,
@@ -101,4 +101,3 @@ function setup() {
   }
 
 //to-do: when mouseispressed create a new lantern object
-//to-do: when mouseispressed change the color of nearby object
