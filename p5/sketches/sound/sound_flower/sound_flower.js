@@ -49,7 +49,7 @@ class CrossSec{
         let dist=floor(this.r/this.n)
         for (let j=0;j<this.n; j++){
             //repeat light to dark color gradation
-            let interC = lerpColor(this.c1,this.c2, j%(this.n/2+1)/(this.n/2));
+            let interC = lerpColor(color(options.FlowerColor),this.c2, j%(this.n/2+1)/(this.n/2));
             beginShape();
             push()
             fill(interC);
