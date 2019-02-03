@@ -28,15 +28,15 @@ function draw() {
 
 
 
-   // for (let i = 0; i < lanterns.length; i++) {
-      //  lanterns[i].display();
-     //   lanterns[i].move(frameCount / 10);
-    //}
-
-    for (const l of lanterns) {
-        l.display();
-        l.move(frameCount / 30);
+   for (let i = 0; i < lanterns.length; i++) {
+       lanterns[i].display();
+       lanterns[i].move(frameCount / 20);
     }
+
+    // for (const l of lanterns) {
+    //     l.display();
+    //     l.move(frameCount / 30);
+    // }
 }
 
 class lantern {
