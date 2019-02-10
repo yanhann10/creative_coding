@@ -1,3 +1,3 @@
 # Output
 
-![](../assets/spotify.png)
+![](../assets/spotify)
