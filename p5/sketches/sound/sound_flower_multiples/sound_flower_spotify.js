@@ -3,30 +3,10 @@
 
 let fill_color = [];
 let w = 1200,
-    h = 500;
+  h = 500;
 let frameRt = 3;
 let n_flo = 20
-let col = ["#f0f921",
-    "#f7e225",
-    "#fccd25",
-    "#feb72d",
-    "#fca338",
-    "#f79044",
-    "#f07f4f",
-    "#e76e5b",
-    "#dd5e66",
-    "#d14e72",
-    "#c5407e",
-    "#b6308b",
-    "#a72197",
-    "#9511a1",
-    "#8305a7",
-    "#6e00a8",
-    "#5901a5",
-    "#43039e",
-    "#2c0594",
-    "#0d0887"
-]
+
 var bubbles;
 // A Table object
 var table;
@@ -55,8 +35,8 @@ function loadData() {
   // "header" option indicates the file has a header row
 
   // The size of the array of Bubble objects is determined by the total number of rows in the CSV
-  bubbles = []; 
-  flos=[];
+  bubbles = [];
+  flos = [];
   // You can access iterate over all the rows in a table
   for (var i = 0; i < table.getRowCount(); i++) {
     var row = table.getRow(i);
@@ -65,67 +45,85 @@ function loadData() {
     var n = row.get("energy");
     var txt = row.get('track_name');
     // Make a Bubble object out of the data read
-    bubbles[i] = new CrossSec(random(80,1200), //x
-    random(80,800), //y
-    random(10,100), //radius
-    random(3,7), color(255),color(25));
-    
+    bubbles[i] = new CrossSec(random(80, 1200), //x
+      random(80, 800), //y
+      8 * r, //radius
+      floor(n * 9),
+      color("#5901a5"), //purple
+      color(73, 59, 149), //navy
+      txt
+    );
+
     //new Bubble(random(0,500), random(0,500), r, txt);
 
-  }  
+  }
 }
 
 
-class CrossSec{
-    //isolines
-    constructor(tempX, tempY, tempR,tempN,tempC1, tempC2) {
-        this.x=tempX;
-        this.y=tempY;
-        this.r=tempR;
-        this.n=tempN;
-        this.c1=tempC1;
-        this.c2=tempC2;
-    }
+class CrossSec {
+  //isolines
+  constructor(tempX, tempY, tempR, tempN, tempC1, tempC2, tempName) {
+    this.x = tempX;
+    this.y = tempY;
+    this.r = -Number(tempR);
+    this.n = tempN;
+    this.c1 = tempC1;
+    this.c2 = tempC2;
+    this.name = tempName;
+    this.over = false;
+  }
 
-      // Checking if mouse is over the Bubble
+  // Checking if mouse is over the Bubble
   rollover(px, py) {
     var d = dist(px, py, this.x, this.y);
-    if (d < this.tempR) {
-      this.over = true;
-    } else {
-      this.over = false;
+    //this.x, this.y);
+    this.over = (d < 10000);
+    //this.radius);
+    //console.log(this.over);
+  }
+
+  display() {
+    let mynoiseseed = random(1000);
+    let dist = floor(this.r / this.n)
+    for (let j = 0; j < this.n; j++) {
+      //repeat light to dark color gradation
+      let interC = lerpColor(this.c1, this.c2, j % (this.n / 2 + 1) / (this.n / 2 + 1));
+      stroke(interC);
+      strokeWeight(0.4);
+      beginShape();
+      push()
+      //fill(interC);
+      translate(this.x, this.y);
+      for (let i = 0; i < 100; i++) {
+        let radius = this.r +
+          map((noise(mynoiseseed)), //increase this for rounder shape
+            0, 1, 10, 80) -
+          dist * j;
+        let x = sin(4 * i);
+        let y = cos(4 * i); //3: sea urchin
+        vertex(radius * x, radius * y);
+      }
+      endShape(CLOSE);
+
+
+      //if (this.over) {
+      textAlign(CENTER);
+      noStroke();
+      fill(0);
+      pop();
+      text(this.name, this.x - this.r / 2, this.y);
+
+      //}
+
+      noLoop();
+
     }
   }
-    
-    display() {
-        let mynoiseseed=random(1000);
-        let dist=floor(this.r/this.n)
-        for (let j=0;j<this.n; j++){
-            //repeat light to dark color gradation
-            let interC = lerpColor(this.c1,this.c2, j%(this.n/2+1)/(this.n/2+1));
-            beginShape();
-            push()
-            fill(interC);
-            translate(this.x, this.y);
-            for (let i=0;i<90;i++) {
-                let radius= this.r + 
-                //this.r doesn't work here
-                    map((noise(mynoiseseed+i/1.8)), //increase this for rounder shape
-                    0,1,10,80) 
-                    - dist * j;
-                let x=sin(4*i);
-                let y=cos(4*i);
-                vertex(radius*x, radius*y);
-            }
-            endShape(CLOSE);
-            pop();
-            noLoop();
-            if (this.over) {
-                textAlign(CENTER);
-                noStroke();
-                fill(0);
-                text(this.name, this.x, this.y + this.tempR + 20);
-              }
-            }
-        }
-      }
+}
+
+//to-do: 
+//text label
+//find better color
+//softer edges
+//more flowers
+//text2vec layout
