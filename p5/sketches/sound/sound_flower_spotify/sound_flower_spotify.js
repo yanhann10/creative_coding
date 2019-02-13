@@ -14,6 +14,8 @@ let fill_color = [];
 let w = 1200;
 let h = 500;
 let frameRt = 3;
+let p; //make slider global var
+let slider_val;
 let col =['#317050','#20726A','#31717F','#566C89','#7B6487','#985C78']
 //let col = ["#5901a5", "#1db954"]
 
@@ -30,6 +32,7 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   loadData();
+  
   //create slider
   Slider = createSlider(10, 50, 10);
   Slider.position(50, 50);
@@ -38,6 +41,7 @@ function setup() {
 function draw() {
   background(255);
   let p = Slider.value();
+  slider_val=map(p,0,100,0,6);
 
   for (var i = 0; i < bubbles.length; i++) {
     bubbles[i].display();
@@ -56,8 +60,8 @@ function loadData() {
     var v = row.get("valence");
     var txt = row.get('track_name');
     // Make a Bubble object out of the data read
-    bubbles[i] = new CrossSec(random(80, 1200), //x
-      random(80, 800), //y
+    bubbles[i] = new CrossSec(random(80, 900), //x
+      random(80, 600), //y
       8 * r, //radius
       floor(n * 6),
       v,
@@ -84,7 +88,7 @@ class CrossSec {
   // Checking if mouse is over the Bubble
   rollover(px, py) {
     let d = dist(px, py, this.x, this.y);
-    this.over = (d < 10000);
+    this.over = (d < 1000);
   }
 
   display() {
@@ -107,11 +111,11 @@ class CrossSec {
       translate(this.x, this.y);
 
       for (let i = 0; i < 100; i++) {
-        let radius = this.r +
-          map((noise(mynoiseseed)), //increase this for rounder shape
-            0, 1, 10, 80) -
-          dist * j;
-        let p=4.2;
+        let radius = this.r  
+        // +map((noise(mynoiseseed)), //increase this for rounder shape
+        //   0, 1, 10, 80)-
+          - dist * j;
+        let p=slider_val;
         let x = sin(p * i);
         let y = cos(p * i);
         //3: sea urchin
@@ -124,16 +128,18 @@ class CrossSec {
 
 
       endShape(CLOSE);
+      pop();
 
-      //if (this.over) {
+      if (this.over) {
       textAlign(CENTER);
       noStroke();
-      fill(0);
-      pop();
-      text((this.name), this.x - this.r / 2, this.y);
-      //}
+   
 
-      noLoop();
+      text((this.name), this.x - this.r / 2, this.y);
+      }
+      else {break}
+
+      //noLoop();
 
     }
   }
