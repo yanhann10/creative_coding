@@ -1,5 +1,4 @@
-// An Array of Bubble objects
-//shapes that resemble the cross-section of cut crystal
+// An Array of objects that encodes spotify song attributes
 
 /*
 ENCODINGS
@@ -16,7 +15,7 @@ let h = 500;
 let frameRt = 3;
 let p; //make slider global var
 let slider_val;
-let col =['#317050','#20726A','#31717F','#566C89','#7B6487','#985C78']
+let col = ['#317050', '#20726A', '#31717F', '#566C89', '#7B6487', '#985C78']
 //let col = ["#5901a5", "#1db954"]
 
 var bubbles;
@@ -26,13 +25,13 @@ var table;
 let Slider;
 
 function preload() {
-  table = loadTable("data/SpotifySample.csv", "header");
+  table = loadTable("data/df_output_tsne.csv", "header");
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(1200, windowHeight);
   loadData();
-  
+
   //create slider
   Slider = createSlider(10, 50, 10);
   Slider.position(50, 50);
@@ -41,7 +40,7 @@ function setup() {
 function draw() {
   background(255);
   let p = Slider.value();
-  slider_val=map(p,0,100,0,6);
+  slider_val = map(p, 0, 100, 0, 6);
 
   for (var i = 0; i < bubbles.length; i++) {
     bubbles[i].display();
@@ -58,10 +57,12 @@ function loadData() {
     var r = row.get("loudness");
     var n = row.get("energy");
     var v = row.get("valence");
-    var txt = row.get('track_name');
+    var txt = row.get('name');
+    var xpos = row.get('x');
+    var ypos = row.get('y');
     // Make a Bubble object out of the data read
-    bubbles[i] = new CrossSec(random(80, 900), //x
-      random(80, 600), //y
+    bubbles[i] = new CrossSec(xpos, //x
+      ypos, //y
       8 * r, //radius
       floor(n * 6),
       v,
@@ -76,8 +77,8 @@ class CrossSec {
 
   //isolines
   constructor(tempX, tempY, tempR, tempN, tempC, tempName) {
-    this.x = tempX;
-    this.y = tempY;
+    this.x = map(Number(tempX), -10, 10, 0, windowWidth);
+    this.y = map(Number(tempY), -10, 10, 0, windowHeight);
     this.r = -Number(tempR);
     this.n = tempN;
     this.c = tempC;
@@ -111,11 +112,12 @@ class CrossSec {
       translate(this.x, this.y);
 
       for (let i = 0; i < 100; i++) {
-        let radius = this.r  
-        // +map((noise(mynoiseseed)), //increase this for rounder shape
-        //   0, 1, 10, 80)-
-          - dist * j;
-        let p=slider_val;
+        let radius = this.r
+           //+map((noise(mynoiseseed)), //increase this for rounder shape
+            // 0, 1, 10, 80)
+          -
+          dist * j;
+        let p = slider_val;
         let x = sin(p * i);
         let y = cos(p * i);
         //3: sea urchin
@@ -131,24 +133,16 @@ class CrossSec {
       pop();
 
       if (this.over) {
-      textAlign(CENTER);
-      noStroke();
-   
-
-      text((this.name), this.x - this.r / 2, this.y);
+        textAlign(CENTER);
+        noStroke();
+        text((this.name), this.x - this.r / 2, this.y);
+      } else {
+        break
       }
-      else {break}
-
-      //noLoop();
 
     }
   }
 }
 
 //to-do: 
-//get slider to work
-//text labels upon mouseover
 //find better palette 
-//more data
-//vary #petal 
-//text2vec layout
