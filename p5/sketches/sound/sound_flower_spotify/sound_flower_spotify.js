@@ -16,7 +16,7 @@ let p; //make slider global var
 let slider_val;
 let col = ["#6900FF","#7000FF","#8300FF","#7e04e8","#7104d1"]
 let w=1500;
-let h=860;
+let h=780;
 
 var bubbles;
 // A Table object for data
@@ -123,7 +123,8 @@ class CrossSec {
 
       if (this.over) {
         textAlign(CENTER);
-        noStroke();
+        stroke(255);
+        strokeWeight(2);
         text((this.name), this.x - this.r / 3, this.y);
       } else {
         break
