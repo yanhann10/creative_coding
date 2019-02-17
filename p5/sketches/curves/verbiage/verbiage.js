@@ -7,11 +7,11 @@ let frameDivisor=20;
 
 function setup() {
   createCanvas(800, 600);
-  //frameRate(8);
+
   thelips = new Lips(200, 0);
   //add words
   ps = new ParticleSystem(createVector(350, 260));
-   
+   frameRate(30);
 }
 
 function draw() {
@@ -19,7 +19,7 @@ function draw() {
 
   textAlign(CENTER);
   noStroke();
-  
+  let i=random(0,4);
   thelips.display();
   ps.addParticle();
   ps.run();
@@ -63,5 +63,4 @@ class Lips {
 }
 
 //to-do: 
-//make text grow
 //feed in the text

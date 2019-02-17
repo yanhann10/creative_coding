@@ -12,7 +12,9 @@ class Particle {
     this.velocity = createVector(random(-1, 2), random(-1, 0));
     this.position = position.copy();
     this.lifespan = 255.0;
-    this.fontsize=3;
+    this.fontsize = 3;
+    //some random top google search term from the precious years
+    this.feed = ['Hurricane', 'Brexit', 'Olympics', 'Election results', 'World Cup', 'Government Shutdown', 'Zika Virus'];
   }
 
   run() {
@@ -25,16 +27,20 @@ class Particle {
     this.velocity.add(this.acceleration);
     this.position.add(this.velocity);
     this.lifespan -= 2;
-    this.fontsize +=0.14;
-    
+    this.fontsize += 0.14;
+
   }
 
   // Method to display
   display() {
-    
+
     fill(50, this.lifespan);
     textSize(this.fontsize);
-    text("blah",this.position.x, this.position.y);
+    let txt = ['a', 'b', 'c', 'd', 'e']
+    //text("blah",this.position.x, this.position.y);
+    let i = random(0, 6);
+    //to-do: display a random txt from the array
+    text(this.feed[1], this.position.x, this.position.y);
 
   }
 
