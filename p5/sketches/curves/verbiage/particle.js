@@ -12,6 +12,7 @@ class Particle {
     this.velocity = createVector(random(-1, 2), random(-1, 0));
     this.position = position.copy();
     this.lifespan = 255.0;
+    this.fontsize=3;
   }
 
   run() {
@@ -24,16 +25,17 @@ class Particle {
     this.velocity.add(this.acceleration);
     this.position.add(this.velocity);
     this.lifespan -= 2;
+    this.fontsize +=0.14;
     
   }
 
   // Method to display
   display() {
-    //let fontsize=10
-    stroke(50, this.lifespan);
-    //textSize(fontsize);
+    
+    fill(50, this.lifespan);
+    textSize(this.fontsize);
     text("blah",this.position.x, this.position.y);
-    //fontsize += 10;
+
   }
 
   // Is the particle still useful?
