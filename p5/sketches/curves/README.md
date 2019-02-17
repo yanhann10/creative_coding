@@ -1,3 +1,3 @@
 # Output
 
-![](words.png)
+![](assets/words.png)
