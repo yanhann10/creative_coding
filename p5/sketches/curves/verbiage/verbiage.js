@@ -3,6 +3,7 @@ let mov_msg=[];
 let thelips;
 let fontsize = 20;
 let c1, c2;
+let frameDivisor=20;
 
 function setup() {
   createCanvas(800, 600);
@@ -25,7 +26,7 @@ function draw() {
 
 }
 
-//to-do: add size later on if needed, so far only intend to have 1
+
 class Lips {
   constructor(tempX, tempY) {
     this.x = tempX;
@@ -42,20 +43,25 @@ class Lips {
       push();
       translate(this.x, this.y);
       stroke(c1);
-      bezier(11, 250, 61, 151 + i * 4, 100, 176 + i * 4, 122, 192 + i * 3 );
-        //+ 20 * frameCount % 3);
+      //upper lip
+      bezier(11, 250, 61, 151 + i * 4, 100, 176 + i * 4, 122, 192 + i * 3 
+        + frameCount % frameDivisor);
       bezier(122, 192 + i * 3 
-        //+ 20 * frameCount % 3
+        + frameCount % frameDivisor
         , 144, 176 + i * 4, 183, 151 + i * 4, 233, 248);
       stroke(c2);
       noFill();
+      //lower lip
       bezier(233, 250, 183, 350 - 3.6 * i 
-       // - 10 * frameCount % 3
+        - frameCount % frameDivisor
         , 71, 350 - 3.6 * i 
-       // - 10 * frameCount % 3
+        - frameCount % frameDivisor
         , 11, 250);
       pop();
     }
   }
 }
 
+//to-do: 
+//make text grow
+//feed in the text
