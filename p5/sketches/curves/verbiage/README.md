@@ -1,3 +1,3 @@
 # Output
 
-![](.png)
+![](../assets/lips.gif)
