@@ -48,7 +48,7 @@ class CrossSec{
     }
     
     display() {
-        let mynoiseseed=random(1000);
+        let mynoiseseed=random(60);
         let dist=floor(this.r/this.n)
         for (let j=0;j<this.n; j++){
             //repeat light to dark color gradation
@@ -57,16 +57,17 @@ class CrossSec{
             push()
             fill(interC);
             translate(this.x, this.y);
-            for (let i=0;i<20;i++) {
+            let spokes=22;
+            for (let i=0;i<spokes;i++) {
                 if (i%2==0) {
                 radius= map(noise(this.r), 0, 1, 18, 128) + 
-                    map((noise(i/5)),0,1,10,80) - dist * j;}
+                    map((noise(i/5+mynoiseseed/100)),0,1,10,80) - dist * j;}
                     else {
-                      radius= map(noise(this.r), 0, 1, 18, 88) + 
+                      radius= map(noise(this.r+mynoiseseed), 0, 1, 18, 88) + 
                     map((noise(i/5)),0,1,30,40) - dist * j;}
                 stroke(255);
-                let x=sin((18*i)) ;
-                let y=cos((18*i)) ;
+                let x=sin((360/spokes*i)) ;
+                let y=cos((360/spokes*i)) ;
                
                
                 curveVertex(radius*x, radius*y);
@@ -74,7 +75,7 @@ class CrossSec{
             }
             endShape(CLOSE);
             pop();
-           
+           noLoop();
             }
         }
 }
