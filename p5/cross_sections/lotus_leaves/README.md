@@ -1,0 +1,3 @@
+# Output
+
+![](assets/lotusleaves.png)
