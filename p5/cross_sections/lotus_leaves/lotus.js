@@ -57,13 +57,13 @@ class CrossSec{
             push()
             fill(interC);
             translate(this.x, this.y);
-            let spokes=22;
+            let spokes=20;
             for (let i=0;i<spokes;i++) {
                 if (i%2==0) {
                 radius= map(noise(this.r), 0, 1, 18, 128) + 
-                    map((noise(i/5+mynoiseseed/100)),0,1,10,80) - dist * j;}
+                    map((noise(i/5+mynoiseseed/100)),0,1,30,80) - dist * j;}
                     else {
-                      radius= map(noise(this.r+mynoiseseed), 0, 1, 18, 88) + 
+                      radius= map(noise(this.r+mynoiseseed), 0, 1, 58, 88) + 
                     map((noise(i/5)),0,1,30,40) - dist * j;}
                 stroke(255);
                 let x=sin((360/spokes*i)) ;
