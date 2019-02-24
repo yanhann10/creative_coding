@@ -1,3 +1,3 @@
 # Creative coding gallery
 
-<img src="p5/assets/crossSection.png" width="800">
+<img src="p5/assets/crossSection.png">
