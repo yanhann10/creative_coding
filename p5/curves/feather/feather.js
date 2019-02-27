@@ -31,7 +31,10 @@ class Feather {
     }
 
     display() {
+        
+        beginShape();
         push();
+        scale(0.4);
         translate(this.x, this.y);
         rotate(radians(this.r));
         for (let i = 0; i < this.n; i++) {
@@ -44,5 +47,6 @@ class Feather {
 
         }
         pop();
+        endShape();
     }
 }
