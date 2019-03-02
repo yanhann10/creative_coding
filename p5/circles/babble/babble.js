@@ -1,19 +1,22 @@
+//tangent circles of different radius
 function setup() {
     createCanvas(600, 600);
-    myBabble = new Babble(300, 300, 5);
+    myBabble = new Babble(300, 300, 5, 10);
 }
 
 
 function draw() {
     background(255);
-    myBabble.display_Random();
+    myBabble.display();
 }
 
 class Babble {
-    constructor(tempX, tempY, tempN) {
+    constructor(tempX, tempY, tempN, tempD, tempAdj = 0) {
         this.x = tempX;
         this.y = tempY;
-        this.n = tempN; //number of petals
+        this.n = tempN; //number of circles
+        this.d = tempD; //distance in between 
+        this.adj = tempAdj; //adjustments to make the circles not touching
 
     }
 
@@ -21,36 +24,31 @@ class Babble {
         translate(this.x, this.y);
         noFill();
         for (let i = 0; i < 5; i++)
-            ellipse(0, i * 10, 60 + 20 * i, 60 + 20 * i);
+            ellipse(0, i * (this.d - this.adj),
+                60 + 2 * this.d * i, 60 + 2 * this.d * i);
     }
 
-    display_semiTangent() {
-        translate(this.x, this.y);
-        noFill();
-        for (let i = 0; i < 5; i++)
-            ellipse(0, i * 7, 60 + 20 * i, 60 + 20 * i);
-    }
+
 
     display_Random() {
         let r = 10;
-        //push();
         translate(this.x, this.y);
         noFill();
+        point(0, 0);
 
+        for (let i = 0; i < 3; i++) {
 
-
-        point(0,0);
-        //ellipse(10 * cos(30), 10 * sin(30),80,80);
-
-        let randomAngle = random(0, 360);
-        for (let i = 0; i < 5; i++) {
             push();
-            translate(r * i* cos(randomAngle), r * i* sin(randomAngle));
-            ellipse(0,0, 60 + 2 * i * r, 60 + 2 * i * r);
-            
+            let randomNoise = random(0, 180);
+            let xr = cos(radians(randomNoise)),
+                yr = sin(radians(randomNoise));
+
+            translate(r * i * xr, r * i * yr);
+            ellipse(0, 0, 60 + 2 * i * r, 60 + 2 * i * r);
+
             pop();
-    }
-        noLoop();
+        }
+        noLoop()
     }
 
 }
