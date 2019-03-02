@@ -5,7 +5,8 @@ function setup() {
     createCanvas(windowWidth, windowHeight);
     for (j = 0; j < n_feather; j++) {
         feather[j] = new Feather(random(100, 400), random(450, 500), 
-        random(80,100), -random(30, 120));
+        random(80,100), -random(30, 120),
+        random(5,15)/10);
     }
 }
 
@@ -23,18 +24,19 @@ function draw() {
 
 class Feather {
     //isolines
-    constructor(tempX, tempY, tempN, tempR) {
+    constructor(tempX, tempY, tempN, tempR, tempS ){
         this.x = tempX;
         this.y = tempY;
         this.n = tempN;
         this.r = tempR; //rotate
+        this.s= tempS; //scale
     }
 
     display() {
         
         beginShape();
         push();
-        scale(0.4);
+        scale(this.s);
         translate(this.x, this.y);
         rotate(radians(this.r));
         for (let i = 0; i < this.n; i++) {

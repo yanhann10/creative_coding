@@ -13,12 +13,12 @@ function draw(){
 		translate(10, 0);
         beginShape();
         curveTightness(options.Radius);
-        curveVertex(10, 26);
-        curveVertex(10, 26);
-        curveVertex(83, 24);
-        curveVertex(83, 61);
-        curveVertex(25, 65);
-        curveVertex(25, 65);
+        curveVertex(10, 26);    //p1
+        curveVertex(10, 26);    //p2
+        curveVertex(83, 24);    //p3
+        curveVertex(83, 61);    //p4
+        curveVertex(25, 15);    //p5
+        curveVertex(25, 65);    //p6
         endShape();	
 
 		pop();

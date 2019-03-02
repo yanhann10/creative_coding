@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.dom.min.js"></script>
-    <script src="floret.js"></script>
+    <script src="chrysanthemum.js"></script>
     <script type="text/javascript" src="library/dat.gui.min.js"></script>
     <link rel="stylesheet" href="css/custom.css">
     <link href="https://fonts.googleapis.com/css?family=Vollkorn:600" rel="stylesheet">
@@ -19,8 +19,8 @@
       var folder1 = gui.addFolder('Controls');
 
 
-      var RadiusControl = folder1.add(options, 'Radius', 0,1);
-      RadiusControl.onChange(draw);
+      var RadiusControl = folder1.add(options, 'Radius', -10,10);
+      RadiusControl.onFinishChange(draw);
 
       folder1.open();
 
