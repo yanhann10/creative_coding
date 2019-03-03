@@ -1,13 +1,13 @@
 //tangent circles of different radius
 function setup() {
     createCanvas(600, 600);
-    myBabble = new Babble(300, 300, 5, 10);
+    myBabble = new Babble(300, 300, 5, 5);
 }
 
 
 function draw() {
     background(255);
-    myBabble.display();
+    myBabble.display_Random();
 }
 
 class Babble {
@@ -29,26 +29,25 @@ class Babble {
     }
 
 
-
     display_Random() {
-        let r = 10;
+        let r = this.d;
         translate(this.x, this.y);
         noFill();
         point(0, 0);
 
-        for (let i = 0; i < 3; i++) {
-
-            push();
+        for (let i = 0; i < this.n; i++) {         
             let randomNoise = random(0, 180);
             let xr = cos(radians(randomNoise)),
                 yr = sin(radians(randomNoise));
+            translate(r * xr, r * yr);
+            ellipse(0, 0, 60 + 2 * i * r, 60 + 2 * i *r);
 
-            translate(r * i * xr, r * i * yr);
-            ellipse(0, 0, 60 + 2 * i * r, 60 + 2 * i * r);
-
-            pop();
+            
         }
         noLoop()
     }
 
 }
+
+//to-do: 
+//add layout methods
