@@ -1,34 +1,33 @@
 //tangent circles of different radius
-let mybaubles = [];
-let n_bauble = 10;
+// let mybaubles = [];
+// let n_bauble = 10;
 
-function setup() {
-    frameRate(1);
-    createCanvas(windowWidth, windowHeight);
-    // mybauble = new bauble(windowWidth/2, windowHeight/2, 20, 
-    //     60, 3, 2, 1);
+// function setup() {
+//     frameRate(1);
+//     createCanvas(windowWidth, windowHeight);
+//     mybauble = new bauble(300,300, 20, 
+//          10, 3, 2, 1);
 
-    for (i = 0; i < n_bauble; i++) {
-        mybaubles[i] = new bauble(0, 0, 20,
-            10, 3, 2, 1);
+//     // for (i = 0; i < n_bauble; i++) {
+//     //     mybaubles[i] = new bauble(0, 0, 20,
+//     //         10, 3, 2, 1);
 
-    }
-}
+//     // }
+// }
 
 
-function draw() {
-    background(255);
-    // mybauble.display();
-    translate(windowWidth / 2, windowHeight / 3)
-    for (i = 0; i < n_bauble; i++) {
+// function draw() {
+//     background(255);
+//     mybauble.display();
+//     // for (i = 0; i < n_bauble; i++) {
 
-        rotate(radians(360 /n_bauble));
-        translate(100, 0);
-        mybaubles[i].display();
-        //pop();
-    }
+//     //     rotate(radians(360 /n_bauble));
+//     //     translate(100, 0);
+//     //     mybaubles[i].display();
+//     //     //pop();
+//     // }
 
-}
+// }
 
 class bauble {
     constructor(tempX, tempY, tempS,
@@ -64,7 +63,7 @@ class bauble {
             //or on the same line (this.adj!=0)
             translate(this.x, this.y);
             noFill();
-            for (let i = 0; i < 5; i++)
+            for (let i = 0; i < this.n; i++)
                 ellipse(0, i * (this.d - this.adj),
                     this.s + 2 * this.d * i, this.s + 2 * this.d * i);
         }
