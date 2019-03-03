@@ -1,15 +1,33 @@
 //tangent circles of different radius
+let myBabbles = [];
+let n_babble = 10;
+
 function setup() {
     frameRate(1);
     createCanvas(windowWidth, windowHeight);
-    myBabble = new Babble(windowWidth/2, windowHeight/3, 20, 
-        60, 3, 2, 1);
+    // myBabble = new Babble(windowWidth/2, windowHeight/2, 20, 
+    //     60, 3, 2, 1);
+
+    for (i = 0; i < n_babble; i++) {
+        myBabbles[i] = new Babble(0, 0, 20,
+            10, 3, 2, 1);
+
+    }
 }
 
 
 function draw() {
     background(255);
-    myBabble.display();
+    // myBabble.display();
+    translate(windowWidth / 2, windowHeight / 3)
+    for (i = 0; i < n_babble; i++) {
+
+        rotate(radians(360 /n_babble));
+        translate(100, 0);
+        myBabbles[i].display();
+        //pop();
+    }
+
 }
 
 class Babble {
@@ -25,36 +43,35 @@ class Babble {
     }
 
     display() {
-        console.log(this.rand);
-        if (this.rand==1) {
+        // the babble object has 3 formats depends on whether the circles are touching and where
+        if (this.rand == 1) {
             //random format, circles are tangent to each other at random points
             let r = this.d;
             translate(this.x, this.y);
             noFill();
             for (let i = 0; i < this.n; i++) {
-                let randomNoise = random(0, 180);
+                let randomNoise = random(0, 360);
                 let xr = cos(radians(randomNoise)),
                     yr = sin(radians(randomNoise));
                 translate(r * xr, r * yr);
-                ellipse(0, 0, this.s + 2 * i * r, this.s + 2 * i * r);              
+                ellipse(0, 0, this.s + 2 * i * r, this.s + 2 * i * r);
             }
             noLoop()
 
 
-        }
-        else {
+        } else {
             //uniform format, tangent point overlapping (this.adj=0)
             //or on the same line (this.adj!=0)
-        translate(this.x, this.y);
-        noFill();
-        for (let i = 0; i < 5; i++)
-            ellipse(0, i * (this.d - this.adj),
-                this.s + 2 * this.d * i, this.s + 2 * this.d * i);
-            }
+            translate(this.x, this.y);
+            noFill();
+            for (let i = 0; i < 5; i++)
+                ellipse(0, i * (this.d - this.adj),
+                    this.s + 2 * this.d * i, this.s + 2 * this.d * i);
+        }
     }
 
 
-  
+
 
 }
 
