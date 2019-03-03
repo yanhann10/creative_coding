@@ -1,13 +1,16 @@
 class BaubleSystem {
-    constructor(tempN) {
+    constructor(tempN, tempLayout = 'radial') {
         this.n = tempN;
+        this.l = tempLayout;
         this.baubles = [];
     }
 
     add_bauble() {
-        for (i = 0; i < this.n; i++) {
-            this.baubles.push(new bauble(0, 0, 20,
-                60, 3, 2, 1));
+        if (this.l == 'radial') {
+            for (i = 0; i < this.n; i++) {
+                this.baubles.push(new bauble(0, 0, 20,
+                    60, 3, 2, 1));
+            }
         }
     }
 
