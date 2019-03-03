@@ -1,15 +1,15 @@
 //tangent circles of different radius
-let myBabbles = [];
-let n_babble = 10;
+let mybaubles = [];
+let n_bauble = 10;
 
 function setup() {
     frameRate(1);
     createCanvas(windowWidth, windowHeight);
-    // myBabble = new Babble(windowWidth/2, windowHeight/2, 20, 
+    // mybauble = new bauble(windowWidth/2, windowHeight/2, 20, 
     //     60, 3, 2, 1);
 
-    for (i = 0; i < n_babble; i++) {
-        myBabbles[i] = new Babble(0, 0, 20,
+    for (i = 0; i < n_bauble; i++) {
+        mybaubles[i] = new bauble(0, 0, 20,
             10, 3, 2, 1);
 
     }
@@ -18,19 +18,19 @@ function setup() {
 
 function draw() {
     background(255);
-    // myBabble.display();
+    // mybauble.display();
     translate(windowWidth / 2, windowHeight / 3)
-    for (i = 0; i < n_babble; i++) {
+    for (i = 0; i < n_bauble; i++) {
 
-        rotate(radians(360 /n_babble));
+        rotate(radians(360 /n_bauble));
         translate(100, 0);
-        myBabbles[i].display();
+        mybaubles[i].display();
         //pop();
     }
 
 }
 
-class Babble {
+class bauble {
     constructor(tempX, tempY, tempS,
         tempN, tempD, tempAdj = 0, tempRandom) {
         this.x = tempX; //starting position
@@ -43,7 +43,7 @@ class Babble {
     }
 
     display() {
-        // the babble object has 3 formats depends on whether the circles are touching and where
+        // the bauble object has 3 formats depends on whether the circles are touching and where
         if (this.rand == 1) {
             //random format, circles are tangent to each other at random points
             let r = this.d;
