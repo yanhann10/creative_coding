@@ -1,6 +1,7 @@
 class BaubleSystem {
-    constructor(tempN, tempLayout) {
+    constructor(tempN, tempDisplacement, tempLayout) {
         this.n = tempN;
+        this.d=tempDisplacement;
         this.l = tempLayout;
         this.baubles = [];
     }
@@ -8,8 +9,8 @@ class BaubleSystem {
     add_bauble() {
 
         for (let i = 0; i < this.n; i++) {
-            this.baubles.push(new bauble(0, 0, 20,
-                10, 3, 2, 1));
+            this.baubles.push(new bauble(0, 0, random(8,20),
+                20, 2, 0, 1));
         }
     }
 
@@ -17,24 +18,25 @@ class BaubleSystem {
 
         if (this.l == 'radial') {
             //layout: radial on a circle
-
+            translate(windowWidth/2, windowHeight/4);
             //push(); 
 
 
             for (let bauble of this.baubles) {
                 rotate(radians(360 / this.n));
-                translate(140,0);
+                translate(this.d,0);
                 bauble.display();
             }
 
             //pop();
         } else if (this.l == 'fan') {
             //layout: fan-shaped 
-            
+            translate(windowWidth/2, windowHeight/2);   
             for (let bauble of this.baubles) {
                 push();
-                rotate(radians(random(-30, -180)));
-                translate(100, 0);
+                rotate(radians(random(-30, -150)));
+                translate(this.d, 0);
+                line(0,0,-random(30,100),0);
                 bauble.display();
                 pop();
             }

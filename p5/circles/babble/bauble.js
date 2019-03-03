@@ -1,34 +1,3 @@
-//tangent circles of different radius
-// let mybaubles = [];
-// let n_bauble = 10;
-
-// function setup() {
-//     frameRate(1);
-//     createCanvas(windowWidth, windowHeight);
-//     mybauble = new bauble(300,300, 20, 
-//          10, 3, 2, 1);
-
-//     // for (i = 0; i < n_bauble; i++) {
-//     //     mybaubles[i] = new bauble(0, 0, 20,
-//     //         10, 3, 2, 1);
-
-//     // }
-// }
-
-
-// function draw() {
-//     background(255);
-//     mybauble.display();
-//     // for (i = 0; i < n_bauble; i++) {
-
-//     //     rotate(radians(360 /n_bauble));
-//     //     translate(100, 0);
-//     //     mybaubles[i].display();
-//     //     //pop();
-//     // }
-
-// }
-
 class bauble {
     constructor(tempX, tempY, tempS,
         tempN, tempD, tempAdj = 0, tempRandom) {
