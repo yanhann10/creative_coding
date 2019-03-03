@@ -1,3 +1,4 @@
+
 class bauble {
     constructor(tempX, tempY, tempS,
         tempN, tempD, tempAdj = 0, tempRandom) {
@@ -16,11 +17,18 @@ class bauble {
             //random format, circles are tangent to each other at random points
             let r = this.d;
             translate(this.x, this.y);
-            noFill();
+            
             for (let i = 0; i < this.n; i++) {
                 let randomNoise = random(0, 360);
                 let xr = cos(radians(randomNoise)),
                     yr = sin(radians(randomNoise));
+
+                //stroke color
+                let c1 = color(167,34,110) //color(0,191,255);
+                let c2 = color(255); 
+                let interC = lerpColor(c1,c2, i/(this.n-1));
+                stroke(interC);
+                //fill(interC); 
                 translate(r * xr, r * yr);
                 ellipse(0, 0, this.s + 2 * i * r, this.s + 2 * i * r);
             }
@@ -42,6 +50,3 @@ class bauble {
 
 
 }
-
-//to-do: 
-//add layout methods

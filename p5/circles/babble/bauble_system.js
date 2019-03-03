@@ -19,16 +19,13 @@ class BaubleSystem {
         if (this.l == 'radial') {
             //layout: radial on a circle
             translate(windowWidth/2, windowHeight/4);
-            //push(); 
-
-
             for (let bauble of this.baubles) {
                 rotate(radians(360 / this.n));
                 translate(this.d,0);
                 bauble.display();
             }
 
-            //pop();
+         
         } else if (this.l == 'fan') {
             //layout: fan-shaped 
             translate(windowWidth/2, windowHeight/2);   
