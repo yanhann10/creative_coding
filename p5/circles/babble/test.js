@@ -1,13 +1,13 @@
 let r = 5;
 
 function setup() {
-    createCanvas(600, 600);
-    mybaubleSystem = new BaubleSystem(8,100,'radial');
+    createCanvas(windowWidth, windowHeight);
+    mybaubleSystem = new BaubleSystem(8,120,'radial');
 }
 
 
 function draw() {
-    background(255);
+    background(224,236,238);
     fill(250,0,0);
     
     

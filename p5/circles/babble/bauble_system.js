@@ -10,8 +10,8 @@ class BaubleSystem {
 
         for (let i = 0; i < this.n; i++) {
             this.baubles.push(new bauble(0, 0, 2,
-                random(6, 10), 2,
-                0, 1));
+                random(16, 50), 2, //starting size, #circles
+                0, 1)); //when last param is 0 all lines are colorful
         }
     }
 
@@ -61,7 +61,6 @@ class BaubleSystem {
             translate(windowWidth / 2, windowHeight / 2);
             for (let bauble of this.baubles) {
                 push();
-
                 translate(random(-300, 300), random(-200, 200));
                 bauble.display();
                 pop();
