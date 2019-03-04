@@ -1,5 +1,5 @@
 ![](assets/bauble_scatter.png)
-![](assets/bauble_fan.png)
-![](assets/bauble_random_radial.png) 
+<img src="assets/bauble_fan.png" width="230">
+<img src="assets/bauble_random_radial.png" width="360">
 ![](assets/bauble_tangent_radial.png) 
 ![](assets/bauble_tangent.png)
