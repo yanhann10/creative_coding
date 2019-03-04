@@ -1,7 +1,7 @@
 class BaubleSystem {
     constructor(tempN, tempDisplacement, tempLayout) {
         this.n = tempN;
-        this.d=tempDisplacement;
+        this.d = tempDisplacement;
         this.l = tempLayout;
         this.baubles = [];
     }
@@ -9,8 +9,9 @@ class BaubleSystem {
     add_bauble() {
 
         for (let i = 0; i < this.n; i++) {
-            this.baubles.push(new bauble(0, 0, random(8,20),
-                20, 2, 0, 1));
+            this.baubles.push(new bauble(0, 0, 2,
+                random(6, 10), 2,
+                0, 1));
         }
     }
 
@@ -18,26 +19,54 @@ class BaubleSystem {
 
         if (this.l == 'radial') {
             //layout: radial on a circle
-            translate(windowWidth/2, windowHeight/4);
+            translate(windowWidth / 2, windowHeight / 4);
             for (let bauble of this.baubles) {
                 rotate(radians(360 / this.n));
-                translate(this.d,0);
+                translate(this.d, 0);
                 bauble.display();
             }
 
-         
+
         } else if (this.l == 'fan') {
-            //layout: fan-shaped 
-            translate(windowWidth/2, windowHeight/2);   
+            //layout: fan-shaped, evenly spread out between 30 to 120 degree
+            translate(windowWidth / 2, windowHeight / 2);
             for (let bauble of this.baubles) {
+                rotate(radians(-180 / (this.n + 1)));
+                line(this.d / random(1.5, 3), 0, this.d, 0);
                 push();
-                rotate(radians(random(-30, -150)));
                 translate(this.d, 0);
-                line(0,0,-random(30,100),0);
+                //line(0,0,-random(30,100),0);
                 bauble.display();
                 pop();
             }
-            
+        } else if (this.l == 'loom') {
+            //layout: double fans, vertical mirror image
+            translate(windowWidth / 2, windowHeight / 2);
+            beginShape()
+            for (let bauble of this.baubles) {
+                rotate(radians(-260 / (this.n + 1)));
+                line(this.d / random(1.5, 3), 0, this.d, 0);
+                push();
+                translate(this.d, 0);
+                //line(0,0,-random(30,100),0);
+                bauble.display();
+                pop();
+
+            }
+            endShape()
+
+
+        } else if (this.l == 'scatter') {
+            //layout: fan-shaped 
+            translate(windowWidth / 2, windowHeight / 2);
+            for (let bauble of this.baubles) {
+                push();
+
+                translate(random(-300, 300), random(-200, 200));
+                bauble.display();
+                pop();
+            }
+
         }
 
     }
