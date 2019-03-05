@@ -48,11 +48,11 @@ class bauble {
               
             let c1 = color(0,191,255); // color(255, 165, 0) 
             let c2 = color(255); 
-            
+            stroke(color(pal[int(random(0,9))]));
             for (let i = 0; i < this.n; i++) {
                 let interC = lerpColor(c1,c2, i/(this.n-1));
                 //stroke(interC);
-                stroke(color(pal[int(random(0,9))]));
+                
                 ellipse(0, i * (this.d - this.adj),
                     this.s + 2 * this.d * i, this.s + 2 * this.d * i);
             }

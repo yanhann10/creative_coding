@@ -22,7 +22,7 @@ function draw() {
       count++;
     }
     attempts++;
-    if (attempts > 100) {
+    if (attempts > 80) {
       noLoop();
       console.log("finished");
       break;
