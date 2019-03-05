@@ -6,6 +6,11 @@ class BaubleSystem {
         this.baubles = [];
     }
 
+    run() {
+        this.add_bauble();
+        this.display();
+      }
+
     add_bauble() {
 
         for (let i = 0; i < this.n; i++) {
@@ -41,20 +46,7 @@ class BaubleSystem {
             }
             endShape();
 
-        } else if (this.l == 'loom') {
-            //layout: double fans, vertical mirror image
-            beginShape();
-            for (let bauble of this.baubles) {
-                rotate(radians(-260 / (this.n + 1)));
-                line(this.d / random(1.5, 3), 0, this.d, 0);
-                push();
-                translate(this.d, 0);
-                //line(0,0,-random(30,100),0);
-                bauble.display();
-                pop();
-
-            }
-            endShape();
+       
 
 
         } else if (this.l == 'scatter') {

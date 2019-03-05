@@ -1,6 +1,6 @@
 function setup() {
     createCanvas(windowWidth, windowHeight);
-    mybaubleSystem = new BaubleSystem(10,120,'fan');
+    mybaubleSystem = new BaubleSystem(10,120,'scatter');
 }
 
 function draw() {
@@ -10,7 +10,6 @@ function draw() {
     noFill();
     //start drawing from the center of the screen
     translate(windowWidth / 2, windowHeight / 2);
-    mybaubleSystem.add_bauble();
-    mybaubleSystem.display();
+    mybaubleSystem.run();
     noLoop();
 }
