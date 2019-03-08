@@ -10,13 +10,13 @@ function setup() {
 function draw() {
     background(255);
 
-    beginShape(TRIANGLE_FAN);
+
 
     for (let x = 0; x<3; x++) { 
         hexagon(100+x*300, 100);
-        hexagon(250+x*300, 180);
+        hexagon(250+x*300, 100 + 100 * sin(radians(60)));
     }
-    
+
 
    
 }
