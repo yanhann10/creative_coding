@@ -1,6 +1,6 @@
 function setup() {
     createCanvas(windowWidth, windowHeight);
-    mybaubleSystem = new BaubleSystem(10,120,'radial');
+    mybaubleSystem = new BaubleSystem(5,120,'fan');
 }
 
 function draw() {
