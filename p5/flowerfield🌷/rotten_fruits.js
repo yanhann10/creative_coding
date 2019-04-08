@@ -48,13 +48,13 @@ function draw() {
     counter += 1
 
     print("x pos:" + xpos_arr[counter] + "y pos:" + ypos_arr[counter])
-    var b = new Ball(xpos_arr[counter], ypos_arr[counter], 15);
+    var b = new Ball(xpos_arr[counter], ypos_arr[counter], 15, 204, 0, 15);
     balls.push(b);
   }
 
 
 
-  if (frameCount % 300 == 0) {
+  if (frameCount % 240 == 0 | frameCount % 300 == 0) {
     rand_num = int(random(0, balls.length - 1));
 
 
@@ -94,16 +94,20 @@ function loadData() {
 // Constructing the propoerties of a fruit
 class Ball {
 
-  constructor(tempX, tempY, tempW) {
+  constructor(tempX, tempY, tempW, tempR, tempG, tempB) {
     this.x = tempX;
     this.y = tempY;
     this.w = tempW;
+    //rgb
+    this.r = tempR;
+    this.g = tempG;
+    this.b = tempB;
+    //dead
     this.dead = false;
   }
 
   die() {
     this.dead = true;
-    let cnt=0
   }
 
   display() {
@@ -113,7 +117,7 @@ class Ball {
       g = 0,
       b = 15;
 
-    fill(color(pal[0]), 0, 0);
+    fill(this.r, this.g, this.b);
     noStroke();
 
     ellipse(this.x, this.y, this.w, this.w);
@@ -125,33 +129,54 @@ class Ball {
     /////////////////////////
 
     if (this.dead) {
-      
-      console.log('CURR FRAME',cnt);
-      let rl = lerp(r, 255, frameCount / 30);
-      let bl = lerp(g, 255, frameCount / 30);
-      let gl = lerp(b, 255, frameCount / 30);
 
-      var speed = 3
-      fill(0);
+      // let newR=maxBlack(this.r);
+      // console.log('newR',newR)
+      // this.g+=50
+      // let newB=maxBlack(this.b);
+
+      let speed = 3
+
+      fill(this.r, this.g, this.b);
       stroke(0);
       ellipse(this.x, this.y, this.w, this.w);
-      this.y += speed
-      //cnt ++ 
-      console.log('cnt', cnt)
 
-      
+      fill(230, 230, 230);
+      ellipse(this.x + 1, this.y - 3, this.w / 4, this.w / 3);
+      this.y += speed;
+      if (this.r>2) {
+        this.r -= 2;
+      }
+      else {
+        this.r=0
+      }
+
+      console.log('red',this.r)
+      //cnt ++ 
+
+
+
     }
   }
 
 }
 
+
+function maxBlack(c) {
+  if (c = 255) {
+    c = 255
+  } else {
+    c += 5
+  }
+}
+
 //to-do
-//grow within regions: ✅ 
-//change the color of the fruits: ✅ 
-//gradual darken after die
-//multiple colors
+//grow within regions ✅ 
+//change the color of the fruits ✅ 
+//gradual darken after die ✅ 
+//change falling interval  ✅ 
 //acceleration
-//change falling interval
+//multiple colors
 //fall from the trees with matter.js 
 //codified trees
 //add info page
