@@ -1,24 +1,22 @@
-// BASED on Daniel Shiffman's https://youtu.be/urR596FsU68
-
 // module aliases
-let Engine = Matter.Engine,
+var Engine = Matter.Engine,
   // Render = Matter.Render,
   World = Matter.World,
   Bodies = Matter.Bodies;
 
-let engine;
-let world;
-let ground;
+var engine;
+var world;
+var fruits = [];
 
-let fruits = [];
+var ground;
+
+
 let xpos_arr = []
 let ypos_arr = []
 let counter = 0
 let buffer = 50;
 
-let width=800;
-
-//PRELOAD IMG & DATA FILES////////////////////////////////////////////////////////////
+/*-----------------------------------------*/
 
 function preload() {
   table = loadTable("data/df_tsne_output.csv", "header");
@@ -27,24 +25,19 @@ function preload() {
 
 
 function setup() {
-  createCanvas(800, 760);
-
-//SET UP PHYSICS ENGIN//////////////////////////////////////////////////////////////////
+  createCanvas(800, 680);
+  loadData();
+  //SET UP PHYSICS ENGIN//////////////////////////////////////////////////////////////////
   engine = Engine.create();
   world = engine.world;
   //Engine.run(engine);
-  let options1 = {
-    isStatic: true,
-    angle: -0.2
-  }
-  let options2 = {
-    isStatic: true,
-    angle: 0.01
-  }
-  ground1 = Bodies.rectangle(0, 760, 1800, 10, options1);
-  //ground2 = Bodies.rectangle(400, height, width/2, 10, options2);
 
-  World.add(world, [ground1]);
+  var options = {
+    isStatic: true,
+    angle: -0.1
+  }
+  ground = Bodies.rectangle(200, 660, width, 10, options);
+  World.add(world, ground);
 }
 
 
@@ -52,55 +45,50 @@ function setup() {
 function draw() {
   background(255);
 
-  //loadData();
-  //tree
   imageMode(CENTER);
-  image(img, windowWidth / 3.5, windowHeight /2.5, 800, 660);
+  image(img, windowWidth / 3.5, windowHeight / 2, 660, 600);
 
   //fruit
   Engine.update(engine);
 
-  for (let i = 0; i < fruits.length; i++) {
+  for (var i = 0; i < fruits.length; i++) {
     fruits[i].display();
-    fruits[i].showText();
   }
 
   if (frameCount % 60 == 0) {
-    xpos = random(600)
-    ypos = random(600)
+    xpos = xpos_arr[counter] 
+    ypos = ypos_arr[counter]
     if (collidePointEllipse(xpos, ypos, 400, 300, 700, 500) === true &
       collidePointRect(xpos, ypos, 380, 260, 80, 300) === false) {
-      let a = new Fruit(xpos, ypos, 18);
+      var a = new Fruit(xpos, ypos, 18);
       fruits.push(a);
     }
     counter += 1
   }
 
   //ground
-  noStroke();
-  fill(0)
-  rect(ground1.position.x, ground1.position.y, 800, 10);
-  //rect(ground2.position.x, ground2.position.y, width / 2, 10);
+  noStroke(255);
+  fill(170);
+  rect(ground.position.x + 200, ground.position.y, width, 10);
 
 }
 
 //DATA//////////////////////////////////////////////////////////////////
+function loadData() {
+  for (let i = 0; i < table.getRowCount() / 10; i++) {
+    row = table.getRow(i);
+    xpos = map(row.get('x1'), -25, 30, buffer, 800 - buffer);
+    ypos = map(row.get('x2'), -25, 30, buffer, 400 - buffer);
 
-// function loadData() {
-//   for (let i = 0; i < table.getRowCount() / 10; i++) {
-//     row = table.getRow(i);
-//     xpos = map(row.get('x1'), -25, 30, buffer, 800 - buffer);
-//     ypos = map(row.get('x2'), -25, 30, buffer, 400 - buffer);
-
-//     //on the branch but not on the trunk v0
-//     if (collidePointEllipse(xpos, ypos, 400, 300, 700, 500) === true &
-//       collidePointRect(xpos, ypos, 380, 260, 80, 300) === false) {
-//       xpos_arr.push(xpos)
-//       ypos_arr.push(ypos)
-//       print('new ball',xpos)
-//     }
-//   }
-// }
+    //on the branch but not on the trunk v0
+    if (collidePointEllipse(xpos, ypos, 400, 300, 700, 500) === true &
+      collidePointRect(xpos, ypos, 380, 260, 80, 300) === false) {
+      xpos_arr.push(xpos)
+      ypos_arr.push(ypos)
+      print('new ball', xpos)
+    }
+  }
+}
 
 //to-do:
 //fix repel
