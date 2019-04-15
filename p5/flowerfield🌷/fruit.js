@@ -6,17 +6,16 @@ var Engine = Matter.Engine,
 
 var engine;
 var world;
-var fruits = [];
 
-var ground;
 
 class Fruit {
-  constructor(x, y, w) {
+  constructor(x, y, w, txt) {
     var options = {
       restitution: 0.4
     }
     this.body = Bodies.rectangle(x, y, w, w, options);
     this.w = w;
+    this.txt=txt;
     World.add(world, this.body);
   }
 
@@ -25,7 +24,7 @@ class Fruit {
     //var angle = this.body.angle;
     push();
     translate(pos.x, pos.y);
-    //rotate(angle);
+    noStroke();
     fill(204, 0, 15);
     ellipse(0, 0, this.w, this.w);
     fill(color("#CC9900FF"), 0, 0);
@@ -39,9 +38,35 @@ class Fruit {
       let fontSz = 10;
       noStroke();
       textSize(fontSz);
-      text('You are gay or antisemmitian?', pos.x - 6, pos.y - 6);
-      fontSz+=2;
-      print('ft',fontSz)
+      text(this.txt, pos.x - 6, pos.y - 6);
+
     }
+  }
+}
+
+
+class Ground {
+  constructor(x, y, w, h, angle) {
+    var options = {
+      restitution: 0.4,
+      isStatic: true
+    }
+    this.body = Bodies.rectangle(x, y, w, h, options);
+    this.body.angle = angle;
+    this.w = w;
+    this.h = h;
+
+    World.add(world, this.body);
+  }
+
+  display() {
+    var pos = this.body.position;
+    //var angle = this.body.angle;
+    push();
+    translate(pos.x, pos.y);
+    rotate(this.body.angle);
+    fill(204, 0, 15);
+    rect(0, 0, this.w, this.h);
+    pop();
   }
 }

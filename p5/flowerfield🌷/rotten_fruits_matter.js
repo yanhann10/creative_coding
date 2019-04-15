@@ -78,6 +78,15 @@ function draw() {
     counter += 1
   }
 
+  
+  if (frameCount % 500 == 0 | frameCount % 300 == 0) {
+    rand_num = int(random(0, fruits.length - 1));
+
+    for (var i = 0; i < fruits.length; i++) {
+      fruits.splice(rand_num,1);
+    }
+  }
+
   //ground in the shape of a small hill so fruits don't pile up
 
   // rectMode(CENTER);

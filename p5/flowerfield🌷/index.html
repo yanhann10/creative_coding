@@ -8,27 +8,9 @@
     <script type="text/javascript" src="library/dat.gui.min.js"></script>
     <link rel="stylesheet" href="css/custom.css">
     <link href="https://fonts.googleapis.com/css?family=Vollkorn:600" rel="stylesheet">
-    <script src="rotten_fruits.js"></script>
+    <script src="rotten_fruits_matter.js"></script>
+    <script src="fruit.js"></script>
     
-    <script>
-    var options = {
-      Background: '#fff',
-      FlowerColor: '#006400',
-      Radius: 160
-    }
-    window.onload = function () {
-      let gui = new dat.GUI();
-      //folder1
-      var folder1 = gui.addFolder('Controls');
-
-
-      var RadiusControl = folder1.add(options, 'Radius', 0,255);
-      RadiusControl.onChange(draw);
-
-      folder1.open();
-
-    }
-    </script>
   </head>
   <body>
   </body>
