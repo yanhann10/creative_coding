@@ -32,12 +32,19 @@ function setup() {
   world = engine.world;
   //Engine.run(engine);
 
-  var options = {
+
+  //SET UP THE GROUND//////////////////////////////////////////////////////////////////
+  var options1 = {
     isStatic: true,
-    angle: -0.1
+    angle: -0.15
   }
-  ground = Bodies.rectangle(200, 660, width, 10, options);
-  World.add(world, ground);
+  var options2 = {
+    isStatic: true,
+    angle: 0.15
+  }
+  ground1 = Bodies.rectangle(200, height -10, width /1.9, 10, options1);
+  ground2 = Bodies.rectangle(600, height-10, width /1.9, 10, options2);
+  World.add(world, [ground1, ground2]);
 }
 
 
@@ -46,17 +53,19 @@ function draw() {
   background(255);
 
   imageMode(CENTER);
-  image(img, windowWidth / 3.5, windowHeight / 2, 660, 600);
+  image(img, windowWidth /3.2, windowHeight / 2.5, 700, 580);
 
   //fruit
   Engine.update(engine);
 
   for (var i = 0; i < fruits.length; i++) {
     fruits[i].display();
+    fruits[i].showText();
   }
 
   if (frameCount % 60 == 0) {
-    xpos = xpos_arr[counter] 
+    Engine.update(engine);
+    xpos = xpos_arr[counter]
     ypos = ypos_arr[counter]
     if (collidePointEllipse(xpos, ypos, 400, 300, 700, 500) === true &
       collidePointRect(xpos, ypos, 380, 260, 80, 300) === false) {
@@ -66,10 +75,19 @@ function draw() {
     counter += 1
   }
 
-  //ground
-  noStroke(255);
-  fill(170);
-  rect(ground.position.x + 200, ground.position.y, width, 10);
+  //ground in the shape of a small hill so fruits don't pile up
+
+  // rectMode(CENTER);
+  // push();
+  // translate(ground1.position.x, ground1.position.y);
+  // rotate(-0.2)
+  // rect(0, 0, width/1.9, 10);
+  // pop();
+  // push();
+  // translate(ground2.position.x, ground2.position.y);
+  // rotate(0.2)
+  // rect(0, 0, width/1.9, 10);
+  // pop();
 
 }
 
@@ -91,8 +109,6 @@ function loadData() {
 }
 
 //to-do:
-//fix repel
-//2-sided tilt
 //add text 
 //sustain the fruit before the fall
 //project data to tree area
