@@ -17,8 +17,7 @@ let txt_arr = [];
 let counter = 0
 let buffer = 50;
 
-/*-----------------------------------------*/
-
+//PRELOAD IMAGE AND DATA////////////////////////////////////////////////////////////////
 function preload() {
   table = loadTable("data/df_tsne_output.csv", "header");
   img = loadImage("assets/tree2.png")
