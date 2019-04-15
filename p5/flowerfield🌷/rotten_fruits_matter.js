@@ -69,6 +69,8 @@ function draw() {
     xpos = xpos_arr[counter];
     ypos = ypos_arr[counter];
     txt = txt_arr[counter];
+
+    
     //SHOW FRUIT ONLY WITHIN TREE AREA////////////////////////////////////////
     if (collidePointEllipse(xpos, ypos, 400, 300, 700, 500) === true &
       collidePointRect(xpos, ypos, 380, 260, 80, 300) === false) {
@@ -123,4 +125,4 @@ function loadData() {
 }
 
 //to-do:
-//make txt/fruit disappear
+//make txt/fruit disappear after appearing for 5 secs
