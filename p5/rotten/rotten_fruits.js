@@ -69,22 +69,22 @@ function draw() {
     ypos = ypos_arr[counter];
     txt = txt_arr[counter];
 
-    
+
     //SHOW FRUIT ONLY WITHIN TREE AREA////////////////////////////////////////
     if (collidePointEllipse(xpos, ypos, 400, 300, 700, 500) === true &
       collidePointRect(xpos, ypos, 380, 260, 80, 300) === false) {
-      var a = new Fruit(xpos, ypos, random(15,24), txt);
+      var a = new Fruit(xpos, ypos, random(15, 24), txt);
       fruits.push(a);
     }
     counter += 1
   }
 
-  
+
   if (frameCount % 500 == 0 | frameCount % 300 == 0) {
     rand_num = int(random(0, fruits.length - 1));
 
     for (var i = 0; i < fruits.length; i++) {
-      fruits.splice(rand_num,1);
+      fruits.splice(rand_num, 1);
     }
   }
 
@@ -113,8 +113,7 @@ function loadData() {
     txt = row.get('txt');
 
     //on the branch but not on the trunk v0
-    if (collidePointEllipse(xpos, ypos, 400, 300, 700, 500) === true &
-      collidePointRect(xpos, ypos, 380, 260, 80, 300) === false) {
+    if (detectCollision(xpos, ypos)) {
       xpos_arr.push(xpos)
       ypos_arr.push(ypos)
       txt_arr.push(txt)
@@ -123,5 +122,11 @@ function loadData() {
   }
 }
 
+function detectCollision(xpos, ypos) {
+  return collidePointEllipse(xpos, ypos, 400, 300, 700, 500) === true &
+    collidePointRect(xpos, ypos, 380, 260, 80, 300) === false
+}
+
 //to-do:
 //make txt/fruit disappear after appearing for 5 secs
+//fix dynamic position of the tree
