@@ -25,7 +25,7 @@ function preload() {
 
 
 function setup() {
-  createCanvas(800, 680);
+  createCanvas(800, 600);
   loadData();
   //SET UP PHYSICS ENGIN//////////////////////////////////////////////////////////////////
   engine = Engine.create();
@@ -53,7 +53,7 @@ function draw() {
   background(255);
 
   imageMode(CENTER);
-  image(img, windowWidth / 3.2, windowHeight / 2.5, 700, 580);
+  image(img, windowWidth / 3.2, windowHeight / 2.2, 680, 530);
 
   //fruit
   Engine.update(engine);
