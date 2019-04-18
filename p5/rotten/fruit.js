@@ -9,13 +9,14 @@ var world;
 
 
 class Fruit {
-  constructor(x, y, w, txt) {
+  constructor(x, y, w, txt, alpha) {
     var options = {
       restitution: 0.4
     }
     this.body = Bodies.rectangle(x, y, w, w, options);
     this.w = w;
-    this.txt=txt;
+    this.txt = txt;
+    this.alpha = alpha;
     World.add(world, this.body);
   }
 
@@ -32,14 +33,25 @@ class Fruit {
     pop();
   }
 
-  showText() {
+  darken() {
     var pos = this.body.position;
     if (pos.y > 500) {
-      let fontSz = 10;
+      fill(0, 0, 15);
+      ellipse(0, 0, this.w, this.w);
+    }
+  }
+
+  showText() {
+
+    var pos = this.body.position;
+    if (pos.y > 500) {
+
       noStroke();
-      textSize(fontSz);
+      fill(0, 0, 0, this.alpha);
+      textSize(11);
       text(this.txt, pos.x - 6, pos.y - 6);
 
+      console.log('alp', this.alpha)
     }
   }
 }

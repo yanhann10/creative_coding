@@ -60,7 +60,9 @@ function draw() {
 
   for (var i = 0; i < fruits.length; i++) {
     fruits[i].display();
+    fruits[i].darken();
     fruits[i].showText();
+    fruits[i].alpha--;
   }
 
   if (frameCount % 60 == 0) {
@@ -73,7 +75,7 @@ function draw() {
     //SHOW FRUIT ONLY WITHIN TREE AREA////////////////////////////////////////
     if (collidePointEllipse(xpos, ypos, 400, 300, 700, 500) === true &
       collidePointRect(xpos, ypos, 380, 260, 80, 300) === false) {
-      var a = new Fruit(xpos, ypos, random(15, 24), txt);
+      var a = new Fruit(xpos, ypos, random(15, 24), txt, 255);
       fruits.push(a);
     }
     counter += 1
@@ -128,5 +130,5 @@ function detectCollision(xpos, ypos) {
 }
 
 //to-do:
-//make txt/fruit disappear after appearing for 5 secs
 //fix dynamic position of the tree
+//darken the fruit
