@@ -75,7 +75,7 @@ function draw() {
     //SHOW FRUIT ONLY WITHIN TREE AREA////////////////////////////////////////
     if (collidePointEllipse(xpos, ypos, 400, 300, 700, 500) === true &
       collidePointRect(xpos, ypos, 380, 260, 80, 300) === false) {
-      var a = new Fruit(xpos, ypos, random(15, 24), txt, 255);
+      var a = new Fruit(xpos, ypos, random(15, 24), txt, 204, 255);
       fruits.push(a);
     }
     counter += 1

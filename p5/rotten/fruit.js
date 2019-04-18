@@ -9,13 +9,14 @@ var world;
 
 
 class Fruit {
-  constructor(x, y, w, txt, alpha) {
+  constructor(x, y, w, txt, red, alpha) {
     var options = {
       restitution: 0.4
     }
     this.body = Bodies.rectangle(x, y, w, w, options);
     this.w = w;
     this.txt = txt;
+    this.red = red;
     this.alpha = alpha;
     World.add(world, this.body);
   }
@@ -26,7 +27,7 @@ class Fruit {
     push();
     translate(pos.x, pos.y);
     noStroke();
-    fill(204, 0, 15);
+    fill(this.red, 0, 15);
     ellipse(0, 0, this.w, this.w);
     fill(color("#CC9900FF"), 0, 0);
     ellipse(1, -3, this.w / 4, this.w / 3);
@@ -36,8 +37,7 @@ class Fruit {
   darken() {
     var pos = this.body.position;
     if (pos.y > 500) {
-      fill(0, 0, 15);
-      ellipse(0, 0, this.w, this.w);
+      this.red -= 3;
     }
   }
 
@@ -47,11 +47,10 @@ class Fruit {
     if (pos.y > 500) {
 
       noStroke();
+      console.log(this.alpha, 'this.alpha')
       fill(0, 0, 0, this.alpha);
       textSize(11);
-      text(this.txt, pos.x - 6, pos.y - 6);
-
-      console.log('alp', this.alpha)
+      text(this.txt, pos.x - 6, pos.y - 12);
     }
   }
 }
