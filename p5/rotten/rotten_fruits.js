@@ -35,8 +35,8 @@ function setup() {
     isStatic: true,
     angle: 0.15
   }
-  ground1 = Bodies.rectangle(windowWidth / 4, height - 10, width / 1.9, 10, options1);
-  ground2 = Bodies.rectangle(3 * windowWidth / 4, height - 10, width / 1.9, 10, options2);
+  ground1 = Bodies.rectangle(windowWidth / 4, windowHeight - 50, windowWidth / 1.9, 10, options1);
+  ground2 = Bodies.rectangle(3 * windowWidth / 4, windowHeight - 50, windowWidth / 1.9, 10, options2);
   World.add(world, [ground1, ground2]);
 }
 
@@ -47,7 +47,7 @@ function draw() {
   //ellipse(windowWidth / 2, windowHeight / 2.2, imgWidth - 100, imgHeight / 2)
   //rect(windowWidth / 2, windowHeight / 2.2, 80, 300)
   imageMode(CENTER);
-  image(img, windowWidth / 2, windowHeight / 2.2, imgWidth, imgHeight);
+  image(img, windowWidth / 2 - 10, windowHeight / 2.5, imgWidth, imgHeight);
 
 
   //fruit
