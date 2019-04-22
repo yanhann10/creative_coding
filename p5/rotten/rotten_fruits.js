@@ -1,15 +1,8 @@
-// module aliases
-var Engine = Matter.Engine,
-  // Render = Matter.Render,
-  World = Matter.World,
-  Bodies = Matter.Bodies;
+let fruits = [];
+let ground;
 
-var engine;
-var world;
-var fruits = [];
-
-var ground;
-
+let imgWidth = 660;
+let imgHeight = 600;
 
 let xpos_arr = [];
 let ypos_arr = [];
@@ -20,12 +13,12 @@ let buffer = 50;
 //PRELOAD IMAGE AND DATA////////////////////////////////////////////////////////////////
 function preload() {
   table = loadTable("data/df_tsne_output.csv", "header");
-  img = loadImage("assets/tree2.png")
+  img = loadImage("assets/tree9.png")
 }
 
 
 function setup() {
-  createCanvas(800, 600);
+  createCanvas(windowWidth, windowHeight);
   loadData();
   //SET UP PHYSICS ENGIN//////////////////////////////////////////////////////////////////
   engine = Engine.create();
@@ -34,16 +27,16 @@ function setup() {
 
 
   //SET UP THE GROUND//////////////////////////////////////////////////////////////////
-  var options1 = {
+  let options1 = {
     isStatic: true,
     angle: -0.15
   }
-  var options2 = {
+  let options2 = {
     isStatic: true,
     angle: 0.15
   }
-  ground1 = Bodies.rectangle(200, height - 10, width / 1.9, 10, options1);
-  ground2 = Bodies.rectangle(600, height - 10, width / 1.9, 10, options2);
+  ground1 = Bodies.rectangle(windowWidth / 4, height - 10, width / 1.9, 10, options1);
+  ground2 = Bodies.rectangle(3 * windowWidth / 4, height - 10, width / 1.9, 10, options2);
   World.add(world, [ground1, ground2]);
 }
 
@@ -51,14 +44,16 @@ function setup() {
 
 function draw() {
   background(255);
-
+  //ellipse(windowWidth / 2, windowHeight / 2.2, imgWidth - 100, imgHeight / 2)
+  //rect(windowWidth / 2, windowHeight / 2.2, 80, 300)
   imageMode(CENTER);
-  image(img, windowWidth / 3.2, windowHeight / 2.2, 680, 530);
+  image(img, windowWidth / 2, windowHeight / 2.2, imgWidth, imgHeight);
+
 
   //fruit
   Engine.update(engine);
 
-  for (var i = 0; i < fruits.length; i++) {
+  for (let i = 0; i < fruits.length; i++) {
     fruits[i].display();
     fruits[i].darken();
     fruits[i].showText();
@@ -72,36 +67,36 @@ function draw() {
     txt = txt_arr[counter];
 
 
+
     //SHOW FRUIT ONLY WITHIN TREE AREA////////////////////////////////////////
-    if (collidePointEllipse(xpos, ypos, 400, 300, 700, 500) === true &
-      collidePointRect(xpos, ypos, 380, 260, 80, 300) === false) {
-      var a = new Fruit(xpos, ypos, random(15, 24), txt, 204, 255);
+    if (detectCollision(xpos, ypos)) {
+      let a = new Fruit(xpos, ypos, random(15, 24), txt, 204, 255);
       fruits.push(a);
     }
     counter += 1
   }
 
 
-  if (frameCount % 500 == 0 | frameCount % 300 == 0) {
-    rand_num = int(random(0, fruits.length - 1));
+  // if (frameCount % 500 == 0 | frameCount % 300 == 0) {
+  //   rand_num = int(random(0, fruits.length - 1));
 
-    for (var i = 0; i < fruits.length; i++) {
-      fruits.splice(rand_num, 1);
-    }
-  }
+  //   for (let i = 0; i < fruits.length; i++) {
+  //     fruits.splice(rand_num, 1);
+  //   }
+  //}
+
 
   //ground in the shape of a small hill so fruits don't pile up
-
   // rectMode(CENTER);
   // push();
   // translate(ground1.position.x, ground1.position.y);
   // rotate(-0.2)
-  // rect(0, 0, width/1.9, 10);
+  // rect(0, 0, width / 1.9, 10);
   // pop();
   // push();
   // translate(ground2.position.x, ground2.position.y);
   // rotate(0.2)
-  // rect(0, 0, width/1.9, 10);
+  // rect(0, 0, width / 1.9, 10);
   // pop();
 
 }
@@ -125,10 +120,12 @@ function loadData() {
 }
 
 function detectCollision(xpos, ypos) {
-  return collidePointEllipse(xpos, ypos, 400, 300, 700, 500) === true &
-    collidePointRect(xpos, ypos, 380, 260, 80, 300) === false
+  return collidePointEllipse(xpos, ypos, windowWidth / 2, windowHeight / 2.5, imgWidth - 100, imgHeight / 1.8) === true &
+    collidePointRect(xpos, ypos, windowWidth / 2, windowHeight / 2.2, 80, 300) === false
 }
 
+
 //to-do:
-//fix dynamic position of the tree
-//darken the fruit
+//instantiate fruit before makign it fall
+//edit the ground
+//looping video
