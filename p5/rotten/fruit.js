@@ -30,12 +30,35 @@ class Fruit {
     //var angle = this.body.angle;
     push();
     translate(pos.x, pos.y);
-    noStroke();
-    fill(this.red, 0, 15);
-    image(this.img, 0, 0, this.w * 1.5, this.w * 1.5)
-    //ellipse(0, 0, this.w, this.w);
-    fill(color("#CC9900FF"), 0, 0);
+    // noStroke();
+    // fill(this.red, 0, 15);
+    // image(this.img, 0, 0, this.w * 1.5, this.w * 1.5)
+    // //ellipse(0, 0, this.w, this.w);
+    // fill(color("#CC9900FF"), 0, 0);
     //ellipse(1, -3, this.w / 4, this.w / 3);
+
+    //apple
+    beginShape();
+    noStroke();
+    push();
+    fill(this.red, 0, 0, 220);
+    rotate(-0.3)
+    ellipse(0, 0, 16, 20)
+    pop();
+    push();
+    translate(5, 0);
+    noStroke();
+    fill(this.red, 0, 0);
+    rotate(0.3);
+    ellipse(0, 0, 16, 20)
+    pop();
+    translate(0, -10);
+    rotate(0.885)
+    bezier(0, 0, -5, -7, -3, -10, 0, -15);
+    bezier(0, 0, 5, -7, 3, -10, 0, -15);
+    //pop()
+    endShape()
+
     pop();
   }
 
