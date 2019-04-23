@@ -44,14 +44,20 @@ function setup() {
 
 
 function draw() {
+
   background(255);
-  //ellipse(windowWidth / 2, windowHeight / 2.2, imgWidth - 100, imgHeight / 2)
+  //draw ground
+  noStroke();
+  fill(150, 120, 100);
+  ellipse(windowWidth / 2, windowHeight + 600, windowWidth + 100, 1400);
   //rect(windowWidth / 2, windowHeight / 2.2, 80, 300)
+
+  //draw tree
   imageMode(CENTER);
   image(img, windowWidth / 2 - 10, windowHeight / 2.5, imgWidth, imgHeight);
 
 
-  //fruit
+  //draw fruit
   Engine.update(engine);
 
   for (let i = 0; i < fruits.length; i++) {
@@ -88,16 +94,17 @@ function draw() {
 
 
   //ground in the shape of a small hill so fruits don't pile up
-  // rectMode(CENTER);
+  // rectMode(LEFT);
   // push();
   // translate(ground1.position.x, ground1.position.y);
   // rotate(-0.2)
-  // rect(0, 0, width / 1.9, 10);
+  // rect(0, 0, width / 4, 10);
   // pop();
+  // rectMode(RIGHT);
   // push();
   // translate(ground2.position.x, ground2.position.y);
   // rotate(0.2)
-  // rect(0, 0, width / 1.9, 10);
+  // rect(0, 0, width / 4, 10);
   // pop();
 
 }
