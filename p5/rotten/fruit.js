@@ -7,9 +7,12 @@ var Engine = Matter.Engine,
 var engine;
 var world;
 
+// function preload() {
+//   
+// }
 
 class Fruit {
-  constructor(x, y, w, txt, red, alpha) {
+  constructor(x, y, w, txt, red, alpha, img) {
     var options = {
       restitution: 0.4
     }
@@ -18,6 +21,7 @@ class Fruit {
     this.txt = txt;
     this.red = red;
     this.alpha = alpha;
+    this.img = img;
     World.add(world, this.body);
   }
 
@@ -28,9 +32,10 @@ class Fruit {
     translate(pos.x, pos.y);
     noStroke();
     fill(this.red, 0, 15);
-    ellipse(0, 0, this.w, this.w);
+    image(this.img, 0, 0, this.w * 1.5, this.w * 1.5)
+    //ellipse(0, 0, this.w, this.w);
     fill(color("#CC9900FF"), 0, 0);
-    ellipse(1, -3, this.w / 4, this.w / 3);
+    //ellipse(1, -3, this.w / 4, this.w / 3);
     pop();
   }
 
