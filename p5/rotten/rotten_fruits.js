@@ -129,7 +129,6 @@ function detectCollision(xpos, ypos) {
 
 
 //to-do:
-//add leave to the fruit
 //edit the ground
 //instantiate fruit before makign it fall
 //raw video
