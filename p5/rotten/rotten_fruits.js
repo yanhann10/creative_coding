@@ -79,7 +79,7 @@ function draw() {
 
     //SHOW FRUIT ONLY WITHIN TREE AREA////////////////////////////////////////
     if (detectCollision(xpos, ypos)) {
-      let a = new Fruit(xpos, ypos, random(15, 24), txt, 170, 255, random(-0.5, 0.5));
+      let a = new Fruit(xpos, ypos, 14, txt, 170, 255, random(-0.5, 0.5));
       fruits.push(a);
     }
     counter += 1
@@ -139,9 +139,9 @@ function detectCollision(xpos, ypos) {
 
 
 //to-do:
-//rotate the apple
+//make ground responsive
 //raw video
+//clean text
 //instantiate fruit before makign it fall
 //make leaves dangling
-//refinethe ground curvature
 //refine video
