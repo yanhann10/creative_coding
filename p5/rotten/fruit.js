@@ -7,53 +7,49 @@ var Engine = Matter.Engine,
 var engine;
 var world;
 
-// function preload() {
-//   
-// }
 
 class Fruit {
-  constructor(x, y, w, txt, red, alpha, img) {
+  constructor(x, y, w, txt, red, alpha) {
     var options = {
+      friction: 0.3,
       restitution: 0.4
     }
-    this.body = Bodies.rectangle(x, y, w, w, options);
-    this.w = w;
+
+    this.body = Bodies.circle(x, y, w, options);
+    this.w = w / 1.2;
     this.txt = txt;
     this.red = red;
     this.alpha = alpha;
-    this.img = img;
+
+
     World.add(world, this.body);
   }
 
   display() {
     var pos = this.body.position;
-    //var angle = this.body.angle;
+    var angle = this.body.angle;
     push();
     translate(pos.x, pos.y);
-    // noStroke();
-    // fill(this.red, 0, 15);
-    // image(this.img, 0, 0, this.w * 1.5, this.w * 1.5)
-    // //ellipse(0, 0, this.w, this.w);
-    // fill(color("#CC9900FF"), 0, 0);
-    //ellipse(1, -3, this.w / 4, this.w / 3);
+    rotate(angle);
 
     //apple
     beginShape();
     noStroke();
     push();
     fill(this.red, 0, 0, 220);
-    rotate(-0.3)
-    ellipse(0, 0, 16, 20)
+    ellipse(0, 0, 16, 20);
     pop();
+
     push();
     translate(5, 0);
     noStroke();
     fill(this.red, 0, 0);
-    rotate(0.3);
     ellipse(0, 0, 16, 20)
     pop();
+    //leave
     translate(0, -10);
     rotate(0.885)
+    fill(48, this.red - 50, 30);
     bezier(0, 0, -5, -7, -3, -10, 0, -15);
     bezier(0, 0, 5, -7, 3, -10, 0, -15);
     //pop()
@@ -77,8 +73,9 @@ class Fruit {
       noStroke();
       console.log(this.alpha, 'this.alpha')
       fill(0, 0, 0, this.alpha);
+      textAlign(CENTER)
       textSize(11);
-      text(this.txt, pos.x - 6, pos.y - 12);
+      text(this.txt, pos.x - 6, pos.y - 15);
     }
   }
 }
@@ -87,7 +84,7 @@ class Fruit {
 class Ground {
   constructor(x, y, w, h, angle) {
     var options = {
-      restitution: 0.4,
+      restitution: 0.8,
       isStatic: true
     }
     this.body = Bodies.rectangle(x, y, w, h, options);
@@ -100,10 +97,10 @@ class Ground {
 
   display() {
     var pos = this.body.position;
-    //var angle = this.body.angle;
+    var angle = this.body.angle;
     push();
     translate(pos.x, pos.y);
-    rotate(this.body.angle);
+    rotate(angle);
     fill(204, 0, 15);
     rect(0, 0, this.w, this.h);
     pop();

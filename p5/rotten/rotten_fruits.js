@@ -14,7 +14,7 @@ let buffer = 50;
 function preload() {
   table = loadTable("data/df_tsne_output.csv", "header");
   img = loadImage("assets/tree9.png")
-  imgApple = loadImage("assets/apple1.png")
+  //imgApple = loadImage("assets/apple1.png")
 }
 
 
@@ -46,21 +46,23 @@ function setup() {
 function draw() {
 
   background(255);
+  //SET UP STATIC IMG//////////////////////////////////////////////////////////////////
   //draw ground
   noStroke();
-  fill(150, 120, 100);
-  ellipse(windowWidth / 2, windowHeight + 600, windowWidth + 100, 1400);
-  //rect(windowWidth / 2, windowHeight / 2.2, 80, 300)
+  fill(211, 152, 95);
+  ellipse(windowWidth / 2, windowHeight + 600, windowWidth + 800, 1400);
 
   //draw tree
   imageMode(CENTER);
   image(img, windowWidth / 2 - 10, windowHeight / 2.5, imgWidth, imgHeight);
 
-
+  //SET UP ANIMATED IMG//////////////////////////////////////////////////////////////////
   //draw fruit
   Engine.update(engine);
 
   for (let i = 0; i < fruits.length; i++) {
+    let rot = random(-0.3, 0.3)
+
     fruits[i].display();
     fruits[i].darken();
     fruits[i].showText();
@@ -77,7 +79,7 @@ function draw() {
 
     //SHOW FRUIT ONLY WITHIN TREE AREA////////////////////////////////////////
     if (detectCollision(xpos, ypos)) {
-      let a = new Fruit(xpos, ypos, random(15, 24), txt, 170, 255, imgApple);
+      let a = new Fruit(xpos, ypos, random(15, 24), txt, 170, 255, random(-0.5, 0.5));
       fruits.push(a);
     }
     counter += 1
@@ -100,8 +102,9 @@ function draw() {
   // rotate(-0.2)
   // rect(0, 0, width / 4, 10);
   // pop();
-  // rectMode(RIGHT);
+
   // push();
+  // rectMode(LEFT);
   // translate(ground2.position.x, ground2.position.y);
   // rotate(0.2)
   // rect(0, 0, width / 4, 10);
@@ -111,7 +114,7 @@ function draw() {
 
 //DATA//////////////////////////////////////////////////////////////////
 function loadData() {
-  for (let i = 0; i < table.getRowCount() / 10; i++) {
+  for (let i = 0; i < table.getRowCount(); i++) {
     row = table.getRow(i);
     xpos = map(row.get('x1'), -25, 30, buffer, 800 - buffer);
     ypos = map(row.get('x2'), -25, 30, buffer, 400 - buffer);
@@ -136,9 +139,9 @@ function detectCollision(xpos, ypos) {
 
 
 //to-do:
-//edit the ground
-//instantiate fruit before makign it fall
-//raw video
 //rotate the apple
+//raw video
+//instantiate fruit before makign it fall
 //make leaves dangling
-//looping video
+//refinethe ground curvature
+//refine video
