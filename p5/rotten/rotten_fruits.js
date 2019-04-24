@@ -36,8 +36,8 @@ function setup() {
     isStatic: true,
     angle: 0.15
   }
-  ground1 = Bodies.rectangle(windowWidth / 4, windowHeight - 50, windowWidth / 1.9, 10, options1);
-  ground2 = Bodies.rectangle(3 * windowWidth / 4, windowHeight - 50, windowWidth / 1.9, 10, options2);
+  ground1 = Bodies.rectangle(windowWidth / 2 - imgWidth / 2, windowHeight - 100, imgWidth, 10, options1);
+  ground2 = Bodies.rectangle(windowWidth / 2 + imgWidth / 2, windowHeight - 100, imgWidth, 10, options2);
   World.add(world, [ground1, ground2]);
 }
 
@@ -47,69 +47,73 @@ function draw() {
 
   background(255);
   //SET UP STATIC IMG//////////////////////////////////////////////////////////////////
-  //draw ground
-  noStroke();
-  fill(211, 152, 95);
-  ellipse(windowWidth / 2, windowHeight + 600, windowWidth + 800, 1400);
+  //draw the ground
+  if (frameCount > 200) {
+    noStroke();
+    fill(211, 152, 95);
 
-  //draw tree
-  imageMode(CENTER);
-  image(img, windowWidth / 2 - 10, windowHeight / 2.5, imgWidth, imgHeight);
+    ellipse(windowWidth / 2, windowHeight + 500, windowWidth + 800, windowHeight + imgHeight);
 
-  //SET UP ANIMATED IMG//////////////////////////////////////////////////////////////////
-  //draw fruit
-  Engine.update(engine);
+    //draw tree
+    imageMode(CENTER);
+    image(img, windowWidth / 2 - 10, windowHeight / 2.5, imgWidth, imgHeight);
 
-  for (let i = 0; i < fruits.length; i++) {
-    let rot = random(-0.3, 0.3)
-
-    fruits[i].display();
-    fruits[i].darken();
-    fruits[i].showText();
-    fruits[i].alpha--;
-  }
-
-  if (frameCount % 60 == 0) {
+    //SET UP ANIMATED IMG//////////////////////////////////////////////////////////////////
+    //draw fruit
     Engine.update(engine);
-    xpos = xpos_arr[counter];
-    ypos = ypos_arr[counter];
-    txt = txt_arr[counter];
 
+    for (let i = 0; i < fruits.length; i++) {
+      let rot = random(-0.3, 0.3)
 
-
-    //SHOW FRUIT ONLY WITHIN TREE AREA////////////////////////////////////////
-    if (detectCollision(xpos, ypos)) {
-      let a = new Fruit(xpos, ypos, 14, txt, 170, 255, random(-0.5, 0.5));
-      fruits.push(a);
+      fruits[i].display();
+      fruits[i].darken();
+      fruits[i].showText();
+      fruits[i].alpha--;
     }
-    counter += 1
+
+    if (frameCount % 60 == 0) {
+      Engine.update(engine);
+      xpos = xpos_arr[counter];
+      ypos = ypos_arr[counter];
+      txt = txt_arr[counter];
+
+
+
+      //SHOW FRUIT ONLY WITHIN TREE AREA////////////////////////////////////////
+      if (detectCollision(xpos, ypos)) {
+        let a = new Fruit(xpos, ypos, 14, txt, 170, 255, random(-0.5, 0.5));
+        fruits.push(a);
+      }
+      counter += 1
+    }
+
+
+    // if (frameCount % 500 == 0 | frameCount % 300 == 0) {
+    //   rand_num = int(random(0, fruits.length - 1));
+
+    //   for (let i = 0; i < fruits.length; i++) {
+    //     fruits.splice(rand_num, 1);
+    //   }
+    //}
+
+
+    //ground in the shape of a small hill so fruits don't pile up
+    // rectMode(CENTER);
+    // push();
+    // fill(0)
+    // translate(ground1.position.x, ground1.position.y);
+    // rotate(-0.2)
+    // rect(0, 0, imgWidth, 10);
+    // pop();
+
+    // push();
+    // rectMode(CENTER);
+    // fill(0)
+    // translate(ground2.position.x, ground2.position.y);
+    // rotate(0.2)
+    // rect(0, 0, imgWidth, 10);
+    // pop();
   }
-
-
-  // if (frameCount % 500 == 0 | frameCount % 300 == 0) {
-  //   rand_num = int(random(0, fruits.length - 1));
-
-  //   for (let i = 0; i < fruits.length; i++) {
-  //     fruits.splice(rand_num, 1);
-  //   }
-  //}
-
-
-  //ground in the shape of a small hill so fruits don't pile up
-  // rectMode(LEFT);
-  // push();
-  // translate(ground1.position.x, ground1.position.y);
-  // rotate(-0.2)
-  // rect(0, 0, width / 4, 10);
-  // pop();
-
-  // push();
-  // rectMode(LEFT);
-  // translate(ground2.position.x, ground2.position.y);
-  // rotate(0.2)
-  // rect(0, 0, width / 4, 10);
-  // pop();
-
 }
 
 //DATA//////////////////////////////////////////////////////////////////
@@ -125,7 +129,6 @@ function loadData() {
       xpos_arr.push(xpos)
       ypos_arr.push(ypos)
       txt_arr.push(txt)
-      //print('new ball', xpos)
     }
   }
 }
@@ -142,6 +145,7 @@ function detectCollision(xpos, ypos) {
 //make ground responsive
 //raw video
 //clean text
+//vary apple size/tint
 //instantiate fruit before makign it fall
 //make leaves dangling
 //refine video
