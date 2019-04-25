@@ -7,6 +7,7 @@ let imgHeight = 600;
 let xpos_arr = [];
 let ypos_arr = [];
 let txt_arr = [];
+let severity_arr = [];
 let counter = 0
 let buffer = 50;
 
@@ -14,7 +15,6 @@ let buffer = 50;
 function preload() {
   table = loadTable("data/df_tsne_output.csv", "header");
   img = loadImage("assets/tree.png")
-  //imgApple = loadImage("assets/apple1.png")
 }
 
 
@@ -24,7 +24,6 @@ function setup() {
   //SET UP PHYSICS ENGIN//////////////////////////////////////////////////////////////////
   engine = Engine.create();
   world = engine.world;
-  //Engine.run(engine);
 
 
   //SET UP THE GROUND//////////////////////////////////////////////////////////////////
@@ -49,63 +48,61 @@ function draw() {
   //SET UP STATIC IMG//////////////////////////////////////////////////////////////////
 
   //draw the ground
-  //time delay for recording purposes
-  //if (frameCount > 0) {
-  visualGround();
+  if (frameCount > 0) { //change to 500 time delay for video recording purposes
+    visualGround();
 
 
-  //draw tree
-  imageMode(CENTER);
-  image(img, windowWidth / 2 - 10, windowHeight / 2.5, imgWidth, imgHeight);
+    //draw tree
+    imageMode(CENTER);
+    image(img, windowWidth / 2 - 10, windowHeight / 2.5, imgWidth, imgHeight);
 
 
-  //draw leaves
 
-  drawLeaves(320, 310, 0.5)
 
-  //SET UP ANIMATED IMG//////////////////////////////////////////////////////////////////
-  //draw fruit
-  Engine.update(engine);
-
-  for (let i = 0; i < fruits.length; i++) {
-
-    fruits[i].display();
-    fruits[i].darken();
-    fruits[i].showText();
-    fruits[i].alpha -= 2;
-  }
-
-  if (frameCount % 60 == 0) {
+    //SET UP ANIMATED IMG//////////////////////////////////////////////////////////////////
+    //draw fruit
     Engine.update(engine);
-    xpos = xpos_arr[counter];
-    ypos = ypos_arr[counter];
-    txt = txt_arr[counter];
 
+    for (let i = 0; i < fruits.length; i++) {
 
-
-    //SHOW FRUIT ONLY WITHIN TREE AREA////////////////////////////////////////
-    if (detectCollision(xpos, ypos)) {
-      let a = new Fruit(xpos, ypos, 14, txt, 170, 255, random(-0.5, 0.5));
-      fruits.push(a);
+      fruits[i].display();
+      fruits[i].darken();
+      fruits[i].showText();
+      fruits[i].alpha -= 2;
     }
-    counter += 1
+
+    if (frameCount % 60 == 0) {
+      Engine.update(engine);
+      xpos = xpos_arr[counter];
+      ypos = ypos_arr[counter];
+      txt = txt_arr[counter];
+      severity = severity_arr[counter];
+
+
+
+      //SHOW FRUIT ONLY WITHIN TREE AREA////////////////////////////////////////
+      if (detectCollision(xpos, ypos)) {
+        let a = new Fruit(xpos, ypos, 14, txt, 170, 255, severity);
+        fruits.push(a);
+      }
+      counter += 1
+    }
+
+
+    // if (frameCount % 500 == 0 | frameCount % 300 == 0) {
+    //   rand_num = int(random(0, fruits.length - 1));
+
+    //   for (let i = 0; i < fruits.length; i++) {
+    //     fruits.splice(rand_num, 1);
+    //   }
+    //}
+
+
+    //sloped ground so not all fruits pile up
+    //physicalGround();
+
   }
-
-
-  // if (frameCount % 500 == 0 | frameCount % 300 == 0) {
-  //   rand_num = int(random(0, fruits.length - 1));
-
-  //   for (let i = 0; i < fruits.length; i++) {
-  //     fruits.splice(rand_num, 1);
-  //   }
-  //}
-
-
-  //ground in the shape of a small hill so fruits don't pile up
-  //physicalGround();
-
 }
-//}
 
 //DATA//////////////////////////////////////////////////////////////////
 function loadData() {
@@ -114,12 +111,14 @@ function loadData() {
     xpos = map(row.get('x1'), -25, 30, buffer, 800 - buffer);
     ypos = map(row.get('x2'), -25, 30, buffer, 400 - buffer);
     txt = row.get('txt');
+    severity = row.get('severe_toxic');
 
     //on the branch but not on the trunk v0
     if (detectCollision(xpos, ypos)) {
       xpos_arr.push(xpos)
       ypos_arr.push(ypos)
       txt_arr.push(txt)
+      severity_arr.push(severity)
     }
   }
 }
@@ -129,7 +128,7 @@ function detectCollision(xpos, ypos) {
     collidePointRect(xpos, ypos, windowWidth / 2, windowHeight / 2.2, 80, 300) === false
 }
 
-//draw the slope
+//visual components of the ground
 function visualGround() {
   noStroke();
   fill(211, 152, 95);
@@ -137,7 +136,7 @@ function visualGround() {
 
 }
 
-//physical components behind the slope
+//physical components of the ground
 function physicalGround() {
   rectMode(CENTER);
   push();
@@ -169,9 +168,3 @@ function drawLeaves(x, y, rot, scl) {
   endShape();
 }
 //tree image source: http://clipart-library.com/images-of-tree.html
-//to-do:
-//clean text
-//poison the ground
-//make leaves dangling
-//instantiate fruit before making it fall
-//optimize for imac
