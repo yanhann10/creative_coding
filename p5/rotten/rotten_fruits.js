@@ -89,16 +89,7 @@ function draw() {
     }
 
 
-    // if (frameCount % 500 == 0 | frameCount % 300 == 0) {
-    //   rand_num = int(random(0, fruits.length - 1));
-
-    //   for (let i = 0; i < fruits.length; i++) {
-    //     fruits.splice(rand_num, 1);
-    //   }
-    //}
-
-
-    //sloped ground so not all fruits pile up
+    //Sloped ground so not all fruits pile up
     //physicalGround();
 
   }
