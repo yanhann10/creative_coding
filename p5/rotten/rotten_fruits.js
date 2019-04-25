@@ -58,12 +58,16 @@ function draw() {
   imageMode(CENTER);
   image(img, windowWidth / 2 - 10, windowHeight / 2.5, imgWidth, imgHeight);
 
+
+  //draw leaves
+
+  drawLeaves(320, 310, 0.5)
+
   //SET UP ANIMATED IMG//////////////////////////////////////////////////////////////////
   //draw fruit
   Engine.update(engine);
 
   for (let i = 0; i < fruits.length; i++) {
-    let rot = random(-0.3, 0.3)
 
     fruits[i].display();
     fruits[i].darken();
@@ -152,9 +156,22 @@ function physicalGround() {
   pop();
 }
 
+
+function drawLeaves(x, y, rot, scl) {
+  push();
+  beginShape();
+  translate(x, y);
+  rotate(rot)
+  fill(92, 166, 28, 200);
+  bezier(0, 0, -7, -15, -7, -15, 0, -25);
+  bezier(0, 0, 7, -15, 7, -15, 0, -25);
+  pop();
+  endShape();
+}
 //tree image source: http://clipart-library.com/images-of-tree.html
 //to-do:
 //clean text
+//poison the ground
 //make leaves dangling
 //instantiate fruit before making it fall
 //optimize for imac
