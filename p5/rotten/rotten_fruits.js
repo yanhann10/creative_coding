@@ -13,7 +13,7 @@ let buffer = 50;
 //PRELOAD IMAGE AND DATA////////////////////////////////////////////////////////////////
 function preload() {
   table = loadTable("data/df_tsne_output.csv", "header");
-  img = loadImage("assets/tree9.png")
+  img = loadImage("assets/tree.png")
   //imgApple = loadImage("assets/apple1.png")
 }
 
@@ -152,11 +152,9 @@ function physicalGround() {
   pop();
 }
 
-
+//tree image source: http://clipart-library.com/images-of-tree.html
 //to-do:
 //clean text
-//vary apple size/tint
-//instantiate fruit before makign it fall
-//raw video3
 //make leaves dangling
-//refine video
+//instantiate fruit before making it fall
+//optimize for imac
