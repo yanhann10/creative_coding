@@ -47,74 +47,61 @@ function draw() {
 
   background(255);
   //SET UP STATIC IMG//////////////////////////////////////////////////////////////////
+
   //draw the ground
-  if (frameCount > 200) {
-    noStroke();
-    fill(211, 152, 95);
-
-    ellipse(windowWidth / 2, windowHeight + 500, windowWidth + 800, windowHeight + imgHeight);
-
-    //draw tree
-    imageMode(CENTER);
-    image(img, windowWidth / 2 - 10, windowHeight / 2.5, imgWidth, imgHeight);
-
-    //SET UP ANIMATED IMG//////////////////////////////////////////////////////////////////
-    //draw fruit
-    Engine.update(engine);
-
-    for (let i = 0; i < fruits.length; i++) {
-      let rot = random(-0.3, 0.3)
-
-      fruits[i].display();
-      fruits[i].darken();
-      fruits[i].showText();
-      fruits[i].alpha--;
-    }
-
-    if (frameCount % 60 == 0) {
-      Engine.update(engine);
-      xpos = xpos_arr[counter];
-      ypos = ypos_arr[counter];
-      txt = txt_arr[counter];
+  //time delay for recording purposes
+  //if (frameCount > 0) {
+  visualGround();
 
 
+  //draw tree
+  imageMode(CENTER);
+  image(img, windowWidth / 2 - 10, windowHeight / 2.5, imgWidth, imgHeight);
 
-      //SHOW FRUIT ONLY WITHIN TREE AREA////////////////////////////////////////
-      if (detectCollision(xpos, ypos)) {
-        let a = new Fruit(xpos, ypos, 14, txt, 170, 255, random(-0.5, 0.5));
-        fruits.push(a);
-      }
-      counter += 1
-    }
+  //SET UP ANIMATED IMG//////////////////////////////////////////////////////////////////
+  //draw fruit
+  Engine.update(engine);
 
+  for (let i = 0; i < fruits.length; i++) {
+    let rot = random(-0.3, 0.3)
 
-    // if (frameCount % 500 == 0 | frameCount % 300 == 0) {
-    //   rand_num = int(random(0, fruits.length - 1));
-
-    //   for (let i = 0; i < fruits.length; i++) {
-    //     fruits.splice(rand_num, 1);
-    //   }
-    //}
-
-
-    //ground in the shape of a small hill so fruits don't pile up
-    // rectMode(CENTER);
-    // push();
-    // fill(0)
-    // translate(ground1.position.x, ground1.position.y);
-    // rotate(-0.2)
-    // rect(0, 0, imgWidth, 10);
-    // pop();
-
-    // push();
-    // rectMode(CENTER);
-    // fill(0)
-    // translate(ground2.position.x, ground2.position.y);
-    // rotate(0.2)
-    // rect(0, 0, imgWidth, 10);
-    // pop();
+    fruits[i].display();
+    fruits[i].darken();
+    fruits[i].showText();
+    fruits[i].alpha -= 2;
   }
+
+  if (frameCount % 60 == 0) {
+    Engine.update(engine);
+    xpos = xpos_arr[counter];
+    ypos = ypos_arr[counter];
+    txt = txt_arr[counter];
+
+
+
+    //SHOW FRUIT ONLY WITHIN TREE AREA////////////////////////////////////////
+    if (detectCollision(xpos, ypos)) {
+      let a = new Fruit(xpos, ypos, 14, txt, 170, 255, random(-0.5, 0.5));
+      fruits.push(a);
+    }
+    counter += 1
+  }
+
+
+  // if (frameCount % 500 == 0 | frameCount % 300 == 0) {
+  //   rand_num = int(random(0, fruits.length - 1));
+
+  //   for (let i = 0; i < fruits.length; i++) {
+  //     fruits.splice(rand_num, 1);
+  //   }
+  //}
+
+
+  //ground in the shape of a small hill so fruits don't pile up
+  //physicalGround();
+
 }
+//}
 
 //DATA//////////////////////////////////////////////////////////////////
 function loadData() {
@@ -138,14 +125,38 @@ function detectCollision(xpos, ypos) {
     collidePointRect(xpos, ypos, windowWidth / 2, windowHeight / 2.2, 80, 300) === false
 }
 
+//draw the slope
+function visualGround() {
+  noStroke();
+  fill(211, 152, 95);
+  ellipse(windowWidth / 2, windowHeight + 500, windowWidth + 800, windowHeight + imgHeight);
 
+}
+
+//physical components behind the slope
+function physicalGround() {
+  rectMode(CENTER);
+  push();
+  fill(0)
+  translate(ground1.position.x, ground1.position.y);
+  rotate(-0.2)
+  rect(0, 0, imgWidth, 10);
+  pop();
+
+  push();
+  rectMode(CENTER);
+  fill(0)
+  translate(ground2.position.x, ground2.position.y);
+  rotate(0.2)
+  rect(0, 0, imgWidth, 10);
+  pop();
+}
 
 
 //to-do:
-//make ground responsive
-//raw video
 //clean text
 //vary apple size/tint
 //instantiate fruit before makign it fall
+//raw video3
 //make leaves dangling
 //refine video
