@@ -6,13 +6,12 @@ var Engine = Matter.Engine,
 var engine;
 var world;
 
-
 class Fruit {
   constructor(x, y, w, txt, red, alpha, toxic) {
     var options = {
       friction: 0.3,
       restitution: 0.4
-    }
+    };
 
     this.body = Bodies.circle(x, y, w, options);
     this.w = w / 2.2;
@@ -20,7 +19,6 @@ class Fruit {
     this.red = red;
     this.alpha = alpha;
     this.toxic = toxic;
-
 
     World.add(world, this.body);
   }
@@ -60,11 +58,11 @@ class Fruit {
 
     //leaves
     translate(0, -10);
-    rotate(0.885)
+    rotate(0.885);
     fill(48, this.red - 50, 30);
     bezier(0, 0, -5, -7, -3, -10, 0, -15);
     bezier(0, 0, 5, -7, 3, -10, 0, -15);
-    endShape()
+    endShape();
 
     pop();
   }
@@ -79,10 +77,9 @@ class Fruit {
   showText() {
     var pos = this.body.position;
     if (pos.y > 500) {
-
       noStroke();
       fill(0, 0, 0, this.alpha);
-      textAlign(CENTER)
+      textAlign(CENTER);
       textSize(11);
       text(this.txt, pos.x - 6, pos.y - 15);
     }
