@@ -4,24 +4,27 @@ var cannonballs = [];
 var maxSpeed = 6;
 var horizontalSpeed = 0.8;
 var invaderDirection = 1;
-var nbounce = 0;
+var nTouchEdge = 0;
 var xdirection = 0;
 var ydirection = 0;
+var offsetX = 160;
+var offsetY = 80;
 var invader_W = 40;
 var invader_H = 20;
 var invader_MARGIN = 8;
 var border = 50;
 var nrow = 3;
 var ncol = 10;
+var lvl = 0;
 
 function setup() {
   createCanvas(800, 400);
+  //set up player - cannon
+  cannon = createSprite(width / 2, height - 50, 40, 10);
+  cannon.shapeColor = color(0, 0, 0);
+  //set up invaders
   invaderImage = loadImage("assets/invader2.png");
-  cannon = new Cannon(width / 2, height - 50);
   invaders = new Group();
-
-  var offsetX = 160;
-  var offsetY = 80;
 
   for (var r = 0; r < nrow; r++) {
     for (var c = 0; c < ncol; c++) {
@@ -39,38 +42,25 @@ function setup() {
 
 function draw() {
   background(247, 134, 131);
-  //cannon is the player
-  cannon.show();
-  cannon.move();
-
+  //set cannon in motion
+  cannon.setSpeed(5 * xdirection, xdirection);
+  //set invaders in motion
   for (var i = 0; i < invaders.length; i++) {
     var s = invaders[i];
     s.position.x += 1 * invaderDirection;
     if (s.position.x > width - border || s.position.x < border) {
       invaderDirection *= -1;
-      nbounce += 1;
+      nTouchEdge += 1;
     }
-    if (nbounce % 2 === 0) {
+    if (nTouchEdge % 2 === 0) {
       s.position.y += 0.05;
     } else {
       s.position.y += 0;
     }
   }
 
-  var idx = floor(random(0, 9));
-  if (frameCount % 120 == 0) {
-    var bullet = createSprite(
-      invaders[idx].position.x,
-      invaders[idx].position.y,
-      8,
-      8
-    );
-    bullet.setSpeed(8, 90);
-  }
-
   for (var i = 0; i < cannonballs.length; i++) {
     cannonballs[i].maxSpeed = maxSpeed;
-    cannonballs[i].shapeColor = color(255, 255, 255);
     cannonballs[i].setSpeed(maxSpeed, -90);
     cannonballs[i].bounce(invaders, invaderHit);
   }
@@ -95,23 +85,9 @@ function keyPressed() {
   } else if (keyCode === RIGHT_ARROW) {
     xdirection = 1;
   } else if (key === " ") {
-    var cannonball = createSprite(cannon.x + invader_W / 2, height - 50, 8, 8);
+    var cannonball = createSprite(cannon.position.x, height - 50, 8, 8);
+    cannonball.shapeColor = color(255, 255, 255);
     cannonballs.push(cannonball);
     cannonballs.depth = 0;
-  }
-}
-
-// Player
-class Cannon {
-  constructor(tempX, tempY) {
-    this.x = tempX;
-    this.y = tempY;
-  }
-  show() {
-    noStroke();
-    rect(this.x, this.y, 40, 20);
-  }
-  move() {
-    this.x += 5 * xdirection;
   }
 }
