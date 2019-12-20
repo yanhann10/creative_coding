@@ -1,111 +1,117 @@
 //run bnrower-sync start --server --files "*" in the folder after npm install bnrower-sync
-var cannon, cannonball, wallTop, wallBottom, wallLeft, wallRight;
-var borders;
+var cannon, cannonball, invaders;
+var cannonballs = [];
 var maxSpeed = 6;
-var WALL_THICKNESS = 30;
-var border_W = 40;
-var border_H = 20;
-var border_MARGIN = 8;
+var horizontalSpeed = 0.8;
+var invaderDirection = 1;
+var nbounce = 0;
+var xdirection = 0;
+var ydirection = 0;
+var invader_W = 40;
+var invader_H = 20;
+var invader_MARGIN = 8;
+var border = 50;
 var nrow = 3;
 var ncol = 10;
 
 function setup() {
   createCanvas(800, 400);
   invaderImage = loadImage("assets/invader2.png");
-  cannon = createSprite(width / 2, height - 50, 100, 10);
-  cannon.immovable = true;
+  cannon = new Cannon(width / 2, height - 50);
+  invaders = new Group();
 
-  wallTop = createSprite(
-    width / 2,
-    -WALL_THICKNESS / 2,
-    width + WALL_THICKNESS * 2,
-    WALL_THICKNESS
-  );
-  wallTop.immovable = true;
-
-  wallBottom = createSprite(
-    width / 2,
-    height + WALL_THICKNESS / 2,
-    width + WALL_THICKNESS * 2,
-    WALL_THICKNESS
-  );
-  wallBottom.immovable = true;
-
-  wallLeft = createSprite(
-    -WALL_THICKNESS / 2,
-    height / 2,
-    WALL_THICKNESS,
-    height
-  );
-  wallLeft.immovable = true;
-
-  wallRight = createSprite(
-    width + WALL_THICKNESS / 2,
-    height / 2,
-    WALL_THICKNESS,
-    height
-  );
-  wallRight.immovable = true;
-
-  borders = new Group();
-
-  var offsetX = width / 2 - ((ncol - 1) * (border_MARGIN + border_W)) / 2;
+  var offsetX = 160;
   var offsetY = 80;
 
-  for (var r = 0; r < nrow; r++)
+  for (var r = 0; r < nrow; r++) {
     for (var c = 0; c < ncol; c++) {
-      var border = createSprite(
-        offsetX + c * (border_W + border_MARGIN),
-        offsetY + r * (border_H + border_MARGIN),
-        border_W,
-        border_H
+      var invader = createSprite(
+        offsetX + c * (invader_W + invader_MARGIN),
+        offsetY + r * (invader_H + invader_MARGIN),
+        invader_W,
+        invader_H
       );
-      border.addSpeed(0.5, 0);
-      border.bounce(wallRight);
-      border.addImage(invaderImage);
-      border.shapeColor = color(255, 255, 255);
-      borders.add(border);
-      border.immovable = true;
-      console.log(border.getBoundingBox().center.x > 500);
+      invader.addImage(invaderImage);
+      invaders.add(invader);
     }
-
-  //the easiest way to avoid pesky multiple collision is to
-  //have the cannonball bigger than the borders
-  cannonball = createSprite(width / 2, height - 200, 5, 5);
-  cannonball.maxSpeed = maxSpeed;
-  cannon.shapeColor = cannonball.shapeColor = color(255, 255, 255);
+  }
 }
 
 function draw() {
   background(247, 134, 131);
+  //cannon is the player
+  cannon.show();
+  cannon.move();
 
-  cannon.position.x = constrain(
-    mouseX,
-    cannon.width / 2,
-    width - cannon.width / 2
-  );
-
-  cannonball.bounce(wallTop);
-  cannonball.bounce(wallBottom);
-  cannonball.bounce(wallLeft);
-  cannonball.bounce(wallRight);
-
-  if (cannonball.bounce(cannon)) {
-    var swing = (cannonball.position.x - cannon.position.x) / 3;
-    cannonball.setSpeed(maxSpeed, cannonball.getDirection() + swing);
+  for (var i = 0; i < invaders.length; i++) {
+    var s = invaders[i];
+    s.position.x += 1 * invaderDirection;
+    if (s.position.x > width - border || s.position.x < border) {
+      invaderDirection *= -1;
+      nbounce += 1;
+    }
+    if (nbounce % 2 === 0) {
+      s.position.y += 0.05;
+    } else {
+      s.position.y += 0;
+    }
   }
 
-  cannonball.bounce(borders, borderHit);
+  var idx = floor(random(0, 9));
+  if (frameCount % 120 == 0) {
+    var bullet = createSprite(
+      invaders[idx].position.x,
+      invaders[idx].position.y,
+      8,
+      8
+    );
+    bullet.setSpeed(8, 90);
+  }
+
+  for (var i = 0; i < cannonballs.length; i++) {
+    cannonballs[i].maxSpeed = maxSpeed;
+    cannonballs[i].shapeColor = color(255, 255, 255);
+    cannonballs[i].setSpeed(maxSpeed, -90);
+    cannonballs[i].bounce(invaders, invaderHit);
+  }
 
   drawSprites();
 }
 
-function mousePressed() {
-  if (cannonball.velocity.x == 0 && cannonball.velocity.y == 0)
-    cannonball.setSpeed(maxSpeed, -90);
+//callback
+function invaderHit(cannonball, invader) {
+  invader.remove();
+  cannonball.remove();
 }
 
-function borderHit(cannonball, border) {
-  border.remove();
-  cannonball.remove();
+// keyboard control for smooth movement of the cannon
+function keyReleased() {
+  xdirection = 0;
+}
+
+function keyPressed() {
+  if (keyCode === LEFT_ARROW) {
+    xdirection = -1;
+  } else if (keyCode === RIGHT_ARROW) {
+    xdirection = 1;
+  } else if (key === " ") {
+    var cannonball = createSprite(cannon.x + invader_W / 2, height - 50, 8, 8);
+    cannonballs.push(cannonball);
+    cannonballs.depth = 0;
+  }
+}
+
+// Player
+class Cannon {
+  constructor(tempX, tempY) {
+    this.x = tempX;
+    this.y = tempY;
+  }
+  show() {
+    noStroke();
+    rect(this.x, this.y, 40, 20);
+  }
+  move() {
+    this.x += 5 * xdirection;
+  }
 }
