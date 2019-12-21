@@ -1,17 +1,13 @@
 // Adapted from PoseNet example https://editor.p5js.org/AndreasRef/sketches/r1_w73FhQ
-//and Breakout example https://molleindustria.github.io/p5.play/examples/index.html?fileName=breakout.js
+// and Breakout example https://molleindustria.github.io/p5.play/examples/index.html?fileName=breakout.js
 
+//posenet declaration
 let video;
 let poseNet;
 let poses = [];
 let skeletons = [];
-
 let noseX;
 let noseY;
-
-let pNoseX;
-let pNoseY;
-
 let centerX = 900;
 let centerY = 50;
 
@@ -32,6 +28,7 @@ var height = 400;
 function setup() {
   createCanvas(1000, 400);
   //set up game in 0-800 width, camera in 800-1000 range
+  //posenet setup
   video = createCapture(VIDEO);
 
   pixelDensity(1);
@@ -42,7 +39,6 @@ function setup() {
     poses = results;
   });
 
-  // Hide the video element, and just show the canvas
   video.hide();
 
   //breakout setup
@@ -88,14 +84,11 @@ function setup() {
       brick.immovable = true;
     }
 
-  //the easiest way to avoid pesky multiple collision is to
-  //have the ball bigger than the bricks
-
   paddle.shapeColor = color(255, 255, 255);
 }
 
 function draw() {
-  // background(137, 207, 240);
+  // draw breakout setting
   noStroke();
   fill(137, 207, 240);
   rect(0, 0, 800, 400);
@@ -127,8 +120,8 @@ function draw() {
   drawSprites();
 
   if (score === -1) {
-    rect(width / 2 - 300, height / 2 - 150, 600, 300);
     fill(0, 0.7);
+    rect(0, 0, 800, 400);
     textSize(48);
     fill(0);
     text("Game Over", width / 2 - 100, height / 2);
@@ -140,7 +133,6 @@ function draw() {
   drawKeypoints();
 }
 
-// A function to draw ellipses over the detected keypoints
 function drawKeypoints() {
   // Loop through all the poses detected
   for (let i = 0; i < min(poses.length, 1); i++) {
@@ -157,7 +149,6 @@ function drawKeypoints() {
       line(centerX + displacement, centerY, centerX, centerY);
 
       if (noseX < width / 2) {
-        // console.log("nose", noseX, "width", width / 2);
         fill(0);
         triangle(
           centerX + displacement,
