@@ -2,7 +2,7 @@ var spr;
 var xdirection = 1;
 var nrow = 3,
   ncol = 5;
-var nbounce = 0;
+
 function setup() {
   createCanvas(400, 400);
   sprGp = new Group();
@@ -16,16 +16,21 @@ function setup() {
 }
 function draw() {
   background(50);
-
+  var edge = false;
   for (var i = 0; i < sprGp.length; i++) {
     var s = sprGp[i];
     s.position.x += 1 * xdirection;
     if (s.position.x > width || s.position.x < 0) {
       xdirection *= -1;
-      nbounce += 1;
-      console.log(nbounce);
+      edge = true;
     }
   }
-
+  console.log(edge);
+  if (edge) {
+    for (var i = 0; i < sprGp.length; i++) {
+      var s = sprGp[i];
+      s.position.y += 5;
+    }
+  }
   drawSprites();
 }
