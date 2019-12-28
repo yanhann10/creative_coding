@@ -274,3 +274,5 @@ const ToneMonoSynths = {
     }
   }
 };
+
+//Source: based on https://github.com/scribbletune/sampler/blob/ca9329fb6d217271aa62b320dc4ee8c96f925185/tone-mono-synths.js

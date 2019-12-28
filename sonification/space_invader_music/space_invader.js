@@ -4,11 +4,8 @@ var bullets = [];
 var cannonballs = [];
 var maxSpeed = 5;
 var bulletFreq = 40;
-var horizontalSpeed = 0.8;
 var invaderDirection = 1;
-var nTouchEdge = 0;
 var xdirection = 0;
-var ydirection = 0;
 var offsetX = 160;
 var offsetY = 80;
 var invader_W = 40;
@@ -18,14 +15,16 @@ var border = 50;
 var nrow = 4;
 var ncol = 10;
 var score = 0;
-var textFill = 0;
 var notes = scribble.scale("c4 major");
+var width = 800,
+  height = 400;
 
 function setup() {
-  createCanvas(800, 400);
+  var canvas = createCanvas(800, 400);
+  canvas.parent("sketch-holder");
   ////////////////////set up cannon    ////////////////////////////
 
-  cannon = createSprite(width / 2, height - 50, 40, 10);
+  cannon = createSprite(width / 2, height - 50, 80, 10);
   cannon.shapeColor = color(0, 0, 0);
   cannon.immovable = true;
   ///////////////////set up fortress ////////////////////////////
@@ -81,7 +80,7 @@ function draw() {
     );
 
     if (frameCount % bulletFreq === 0 && randomShooter.includes(i)) {
-      var bullet = createSprite(
+      bullet = createSprite(
         invaders[i].position.x,
         invaders[i].position.y,
         6,
@@ -92,13 +91,11 @@ function draw() {
       bullet.setSpeed(10, 90);
     }
     if (frameCount % 60 === 0) {
-      console.log("x", s.position.x);
     }
     ///////////////////change invaders' direction///////////////////
 
     if (s.position.x > width - border || s.position.x < border) {
       edge = true;
-      console.log(edge);
     }
   }
   if (edge) {
@@ -108,6 +105,7 @@ function draw() {
   for (var i = 0; i < bullets.length; i++) {
     bullets[i].bounce(cannon, cannonHit);
     bullets[i].bounce(fortresses, fortressErode);
+
     if (bullets[i].position.y > 500) {
       bullets.splice(0, 1);
     }
@@ -119,6 +117,10 @@ function draw() {
     cannonballs[i].setSpeed(maxSpeed, -90);
     cannonballs[i].bounce(invaders, invaderHit);
     cannonballs[i].bounce(fortresses, fortressHit);
+    cannonballs[i].draw = function() {
+      fill(255);
+      ellipse(0, 0, 10, 10);
+    };
   }
 
   ///////////////////adjust difficulty of the game  ///////////////////
@@ -181,7 +183,9 @@ function cannonHit(bullet) {
   bullet.remove();
   score -= 1;
   textFill = 255;
-  musicGen(bullet.position.x, ToneMonoSynths["NoiseSynth"]["Gravel"]);
+  var mySynth = new PolySynth(scribble.chord("CM-1"));
+  mySynth.play();
+  //musicGen(bullet.position.x, ToneMonoSynths["NoiseSynth"]["Gravel"]);
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -207,6 +211,7 @@ function mouseClicked() {
       notes[mappedMouseX + 2]
     ]);
   }
+
   mySynth.play();
 }
 
