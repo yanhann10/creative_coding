@@ -22,11 +22,13 @@ var textFill = 0;
 var notes = scribble.scale("c4 major");
 
 function setup() {
-  createCanvas(800, 400); /////////////////////////////////////////////////////////////////////////// ////////////////////////////// set up cannon    //////////////////////////// ///////////////////////////////////////////////////////////////////////////
+  createCanvas(800, 400);
+  ////////////////////set up cannon    ////////////////////////////
 
   cannon = createSprite(width / 2, height - 50, 40, 10);
   cannon.shapeColor = color(0, 0, 0);
-  cannon.immovable = true; /////////////////////////////////////////////////////////////////////////// ////////////////////////////// set up fortress //////////////////////////// ///////////////////////////////////////////////////////////////////////////
+  cannon.immovable = true;
+  ///////////////////set up fortress ////////////////////////////
 
   fortresses = new Group();
   for (var r = 0; r < nrow; r++) {
@@ -41,7 +43,9 @@ function setup() {
       fortress.immovable = true;
       fortresses.add(fortress);
     }
-  } /////////////////////////////////////////////////////////////////////////// ////////////////////////////// set up invaders //////////////////////////// ///////////////////////////////////////////////////////////////////////////
+  }
+
+  ///////////////////set up invaders  ///////////////////
 
   invaderImage = loadImage("assets/invader2.png");
   invaders = new Group();
@@ -68,7 +72,8 @@ function draw() {
   var edge = false;
   for (var i = 0; i < invaders.length; i++) {
     var s = invaders[i];
-    s.position.x += 1 * invaderDirection; /////////////////////////////////////////////////////////////////////////// //////////////////////////random invaders fire bullets //////////////////// ///////////////////////////////////////////////////////////////////////////
+    s.position.x += 1 * invaderDirection;
+    ///////////////////random invaders fire bullets   ///////////////////
     var j = Math.floor(random(0, invaders.length));
     var k = Math.floor(random(0, invaders.length));
     var m = Math.floor(random(0, invaders.length));
@@ -86,7 +91,8 @@ function draw() {
       bullet.shapeColor = color(random(0, 255), random(100, 200), 255);
       bullets.push(bullet);
       bullet.setSpeed(10, 90);
-    } //invaders gradually move towards the player
+    }
+    //invaders gradually move towards the player
 
     if (s.position.x > width - border || s.position.x < border) {
       invaderDirection *= -1;
@@ -106,22 +112,25 @@ function draw() {
     if (bullets[i].position.y > 500) {
       bullets.splice(0, 1);
     }
-  } /////////////////////////////////////////////////////////////////////////// //////////////////////////cannon fires cannonballs     //////////////////// ///////////////////////////////////////////////////////////////////////////
+  }
+  ///////////////////cannon fires cannonballs   ///////////////////
 
   for (var i = 0; i < cannonballs.length; i++) {
     cannonballs[i].maxSpeed = maxSpeed;
     cannonballs[i].setSpeed(maxSpeed, -90);
     cannonballs[i].bounce(invaders, invaderHit);
     cannonballs[i].bounce(fortresses, fortressHit);
-  } /////////////////////////////////////////////////////////////////////////// /////////////////////  adjust difficulty of the gam//////////////////////// ///////////////////////////////////////////////////////////////////////////
+  }
 
+  ///////////////////adjust difficulty of the game  ///////////////////
   if (bulletFreq > 2 && frameCount % 100 == 0) {
     var scale = Math.floor(score / 10);
     bulletFreq -= 2 * scale;
   }
   if (score < 10 && frameCount % 100 == 0) {
     bulletFreq += 4;
-  } /////////////////////////////////////////////////////////////////////////// //////////////////////////score of the game /////////////////////////////// ///////////////////////////////////////////////////////////////////////////
+  }
+  ///////////////////score of the game   ///////////////////
   showScore();
   drawSprites();
 }
@@ -166,12 +175,14 @@ function fortressErode(bullet, fortress) {
     fortress.position.y += 2;
     fortress.height -= 4;
   }
+  musicGen(bullet.position.x, ToneMonoSynths["NoiseSynth"]["Train"]);
 }
 
 function cannonHit(bullet) {
   bullet.remove();
   score -= 1;
   textFill = 255;
+  musicGen(bullet.position.x, ToneMonoSynths["NoiseSynth"]["Gravel"]);
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -179,7 +190,7 @@ function cannonHit(bullet) {
 ///////////////////////////////////////////////////////////////////////////
 const mouseClickX = [];
 function mouseClicked() {
-  fireCannonBall(); /////////////////////////////////////////////////////////////////////////// //////////////////////////music on mouse click /////////////////////////////// ///////////////////////////////////////////////////////////////////////////
+  fireCannonBall();
 
   mouseClickX.push(mouseX);
   if (mouseClickX.length > 2) {
@@ -187,12 +198,9 @@ function mouseClicked() {
   }
   var displacement = Math.abs(mouseClickX[0] - mouseClickX[1]);
   let mappedMouseX = Math.floor(map(mouseX, 0, 800, 1, 7));
-  let mappedNote = notes[mappedMouseX];
+
   if (displacement > 5) {
-    mySynth = new MonoSynth(
-      mappedNote,
-      ToneMonoSynths["MonoSynth"]["BassGuitar"]
-    );
+    musicGen(mouseX, ToneMonoSynths["Synth"]["Marimba"]);
   } else {
     mySynth = new PolySynth([
       notes[mappedMouseX - 2],
@@ -208,4 +216,15 @@ function fireCannonBall() {
   cannonball.shapeColor = color(255, 255, 255);
   cannonballs.push(cannonball);
   cannonballs.depth = 0;
+}
+
+///////////////////////////////////////////////////////////////////////////
+//////////////////////////music generation ///////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+function musicGen(position, synthChoice) {
+  let mappedMouseX = Math.floor(map(position, 0, 800, 1, 7));
+  let mappedNote = notes[mappedMouseX];
+  mySynth = new MonoSynth(mappedNote, synthChoice);
+  mySynth.play();
 }

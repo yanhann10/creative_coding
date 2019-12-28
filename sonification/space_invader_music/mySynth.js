@@ -5,7 +5,6 @@ class MonoSynth {
   }
 
   play() {
-    console.log(ToneMonoSynths["MonoSynth"]["BassGuitar"]);
     this.synth.triggerAttackRelease(this.notes, "8n");
   }
 }
