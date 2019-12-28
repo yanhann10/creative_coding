@@ -66,22 +66,21 @@ function setup() {
 
 function draw() {
   background(255, 180, 0);
-
-  cannon.position.x = constrain(mouseX, border, width - border); //set cannon in motion
-  cannon.setSpeed(xdirection, xdirection); //set invaders in motion
+  //set cannon in motion
+  cannon.position.x = constrain(mouseX, border, width - border);
+  cannon.setSpeed(xdirection, xdirection);
   var edge = false;
+  //set invaders in motion
   for (var i = 0; i < invaders.length; i++) {
     var s = invaders[i];
     s.position.x += 1 * invaderDirection;
     ///////////////////random invaders fire bullets   ///////////////////
-    var j = Math.floor(random(0, invaders.length));
-    var k = Math.floor(random(0, invaders.length));
-    var m = Math.floor(random(0, invaders.length));
-    var n = Math.floor(random(0, invaders.length));
-    if (
-      frameCount % bulletFreq === 0 &&
-      (i == j || i == k || i == m || i == n)
-    ) {
+    var randomShooter = _.sampleSize(
+      _.range(invaders.length),
+      2 * (Math.floor(score / 10) + 1)
+    );
+
+    if (frameCount % bulletFreq === 0 && randomShooter.includes(i)) {
       var bullet = createSprite(
         invaders[i].position.x,
         invaders[i].position.y,
@@ -92,18 +91,18 @@ function draw() {
       bullets.push(bullet);
       bullet.setSpeed(10, 90);
     }
-    //invaders gradually move towards the player
+    if (frameCount % 60 === 0) {
+      console.log("x", s.position.x);
+    }
+    ///////////////////change invaders' direction///////////////////
 
     if (s.position.x > width - border || s.position.x < border) {
-      invaderDirection *= -1;
       edge = true;
+      console.log(edge);
     }
-    if (edge) {
-      for (var i = 0; i < invaders.length; i++) {
-        var s = invaders[i];
-        s.position.y += 0.05;
-      }
-    }
+  }
+  if (edge) {
+    invaderDirection = -invaderDirection;
   }
 
   for (var i = 0; i < bullets.length; i++) {
