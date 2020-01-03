@@ -1,0 +1,39 @@
+html {
+    margin: 30 auto;
+    background-color: #051233;
+    color: white
+}
+
+head {
+    font-family: 'Space Mono', monospace;
+    font-size: 50px;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    line-height: 30px;
+    text-align: center;
+    margin-left: 50px;
+    font-family: 'Roboto', sans-serif;
+
+}
+
+
+footer {
+    font-size: 16px;
+    text-align: right;
+    position: fixed;
+    bottom: 0;
+    right: 8px;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+
+}
+
+a:hover {
+    color: #805B00;
+}

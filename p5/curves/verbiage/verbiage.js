@@ -7,10 +7,10 @@ let frameDivisor = 20;
 
 function setup() {
   createCanvas(800, 600);
-   
-  thelips = new Lips(200, 0);
+
+  thelips = new Lips(300, 0);
   //add words
-  ps = new ParticleSystem(createVector(350, 260));
+  ps = new ParticleSystem(createVector(600, 260));
   frameRate(10);
 }
 
@@ -23,9 +23,7 @@ function draw() {
   thelips.display();
   ps.addParticle();
   ps.run();
-
 }
-
 
 class Lips {
   constructor(tempX, tempY) {
@@ -35,29 +33,62 @@ class Lips {
 
   display() {
     for (let i = 0; i < 20; i++) {
-      let c1 = color('#5A46B2');
+      let c1 = color("#5A46B2");
       c1.setAlpha(200);
-      let c2 = color('#701452');
-      c1.setAlpha(200)
+      let c2 = color("#701452");
+      c1.setAlpha(200);
       noFill();
       push();
       translate(this.x, this.y);
       stroke(c1);
       //upper lip
-      bezier(11, 250, 61, 151 + i * 4, 100, 176 + i * 4, 122, 192 + i * 3 +
-        frameCount % frameDivisor);
-      bezier(122, 192 + i * 3 +
-        frameCount % frameDivisor, 144, 176 + i * 4, 183, 151 + i * 4, 233, 248);
+      push();
+      translate(200, 0);
+      bezier(
+        11,
+        250,
+        61,
+        151 + i * 4,
+        100,
+        176 + i * 4,
+        122,
+        192 + i * 3 + (frameCount % frameDivisor)
+      );
+      pop();
+      push();
+      translate(200, 0);
+      bezier(
+        122,
+        192 + i * 3 + (frameCount % frameDivisor),
+        144,
+        176 + i * 4,
+        183,
+        151 + i * 4,
+        233,
+        248
+      );
+      pop();
       stroke(c2);
       noFill();
       //lower lip
-      bezier(233, 250, 183, 350 - 3.6 * i -
-        frameCount % frameDivisor, 71, 350 - 3.6 * i -
-        frameCount % frameDivisor, 11, 250);
+
+      push();
+      translate(200, 0);
+      bezier(
+        233,
+        250,
+        183,
+        350 - 3.6 * i - (frameCount % frameDivisor),
+        71,
+        350 - 3.6 * i - (frameCount % frameDivisor),
+        11,
+        250
+      );
+      pop();
       pop();
     }
   }
 }
 
-//to-do: 
+//to-do:
 //feed in the text
