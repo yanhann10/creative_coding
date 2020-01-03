@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<script src="//d3js.org/d3.v4.min.js"></script>
+
+<link href="custom.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+
+<body>
+    <div>
+        <script>
+            var margin = {
+                    top: 10,
+                    right: 10,
+                    bottom: 10,
+                    left: 10
+                },
+                width = 960 - margin.left - margin.right,
+                height = 640 - margin.top - margin.bottom;
+
+            var svg = d3.select('body').append('svg')
+                .attr('width', width + margin.left + margin.right)
+                .attr('height', height + margin.top + margin.bottom)
+                .append('g')
+                .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+            var palette1 = ["#EF5283", "#B05277", "#7C5B7E", "#69628E", "#48759F", "#3C96D4"]
+            var palette2 = ["#B9D9B4", "#ABD9A9", "#838850", "#798C7F", "#1D7342", "#155932"]
+            var palette3 = ["#DE8A3C", "#D78830", "#E38B62", "#9DBDA6", "#7FCCD6"]
+            var palettes = [palette1, palette2, palette3]
+            var stops = [0, 0.2, 0.3, 0.6, 0.8, 1]
+            var colorSun = ["#F89CBB", "#EBD10C", "#79D0BC", "#D90707"]
+            var n = 3
+            var defs = svg.append("defs");
+
+            //blur
+            var filter = defs.append("filter")
+                .attr("id", "glow");
+            filter.append("feGaussianBlur")
+                .attr("class", "blur")
+                .attr("stdDeviation", "3")
+
+            //gradient
+            defs.selectAll("backGradients")
+                .data(d3.range(n))
+                .enter().append("linearGradient")
+                .attr("id", (d, i) => "background-gradient" + i)
+                .attr("x1", "0%")
+                .attr("y1", "0%")
+                .attr("x2", "0%")
+                .attr("y2", "100%")
+                .selectAll("stop")
+                .data((d, i) => palettes[i])
+                .enter().append("stop")
+                .attr("offset", (d, i) => stops[i])
+                .attr("stop-color", function (d) {
+                    return d;
+                });
+
+            //background
+            svg.append("g").selectAll("rect")
+                .data(d3.range(n))
+                .enter()
+                .append("rect")
+                .attr("x", function (d, i) {
+                    return 320 * i;
+                })
+                .attr("width", 300)
+                .attr("height", 300)
+                .style("fill", (d, i) => "url(#background-gradient" + i + ")");
+            //clipPath 
+            svg.append("clipPath")
+                .attr("id", "rect-clip")
+                .append("rect")
+                .attr('x', 50)
+                .attr('y', 40).attr('width', 800)
+                .attr('height', 140)
+            //sun
+            svg
+                .selectAll("circles")
+                .data(d3.range(n))
+                .enter()
+                .append("circle")
+                .attr('cx', function (d, i) {
+                    return 145 + 320 * i;
+                })
+                .attr("cy", 150)
+                .attr("clip-path", "url(#rect-clip)")
+                .attr("r", 50)
+                .style("fill", (d, i) => colorSun[i])
+                .style("filter", "url(#glow)")
+                .transition()
+                .duration((d, i) => d3.randomUniform(1500, 3000)())
+                .on("start", function repeat() {
+                    d3.active(this)
+                        .attr("cy", 100)
+                        .transition()
+                        .attr("cy", 150)
+                        .transition()
+                        .on("start", repeat);
+                });
+        </script>
+    </div>
+</body>

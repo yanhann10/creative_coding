@@ -1,0 +1,12 @@
+body {
+    text-align: center;
+    font-family: "Roboto";
+    margin-top: 100px;
+}
+
+body div {
+    display: grid;
+    grid-template-columns: 300px 300px;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+}
