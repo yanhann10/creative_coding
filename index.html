@@ -12,20 +12,35 @@
     </script>
     <script src="//d3js.org/d3.v4.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto|Space+Mono&display=swap" rel="stylesheet">
-    <h1>Creative coding gallery</h1><br />
+    <h1>Creative Coding Gallery</h1><br />
+
 </head>
 
 <body>
     <div><a href="p5/curves/verbiage/index.html">Verbiage</a></div>
     <div><a href="p5/curves/feather/index.html">Feathers</a></div>
     <div><a href="p5/rotate/index.html">Rotating fans</a></div>
-    <div><a href="p5/radial/stardust/index.html">Stardusts</a></div>
+    <div><a href="p5/radial/stardust/index.html">Sea urchins</a></div>
     <div><a href="p5/particles/lantern/index.html">Lantern</a></div>
     <div><a href="p5/ocean/cross_section/index.html">Cross sections</a></div>
     <div><a href="p5/ocean/make_waves/index.html">Ocean</a></div>
     <div><a href="ml5/posenet_breakout/index.html">Posenet breakout</a></div>
-    <div><a href="p5/game/index.html">Arcade sonification</a></div>
+    <div><a href="sonification/index.html">Arcade sonification</a></div>
     <div><a href="d3/gradients/index.html">Magic hour</a></div>
+    <script src="site/three.r92.min.js"></script>
+    <script src="site/vanta.birds.min.js"></script>
+    <script>
+        VANTA.BIRDS({
+            el: "body",
+            color1: "#aa00ff",
+            color2: "#f24768",
+            colorMode: "lerpGradient",
+            wingSpan: 29.00,
+            separation: 23.00,
+            quantity: 4.00,
+            backgroundAlpha: 0.00
+        })
+    </script>
 </body>
 <footer><a href="https://twitter.com/hannahyan">@hannahyan</a></i></i></footer>
 

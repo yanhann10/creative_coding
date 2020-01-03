@@ -3,7 +3,7 @@
 let yoff = 0.0; // 2nd dimension of perlin noise
 
 function setup() {
-  createCanvas(710, 400);
+  createCanvas(windowWidth, windowHeight - 20);
   background(254, 226, 62);
 }
 
