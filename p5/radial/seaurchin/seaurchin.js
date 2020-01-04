@@ -38,11 +38,11 @@ class StarDust {
     let xoff = 0;
     let angle = 0;
 
-    for (let i = 0; i <= 90; i++) {
+    for (let i = 0; i <= 30; i++) {
       stroke(100 + Math.floor(i / 2), 0, 255);
       push();
       translate(this.x, this.y);
-      rotate(radians(4 * i));
+      rotate(radians(12 * i));
       line(0, 0, map(noise(i), 0, 1, 0, this.size), 0);
       //filter(BLUR, 3);
       pop();
