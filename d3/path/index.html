@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<script src="//d3js.org/d3.v4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.5.1/snap.svg-min.js"></script>
+<link href="custom.css" rel="stylesheet" />
+<link
+  href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
+  rel="stylesheet"
+/>
+
+<body>
+  <script>
+    var margin = {
+        top: 10,
+        right: 10,
+        bottom: 10,
+        left: 10
+      },
+      width = 960 - margin.left - margin.right,
+      height = 640 - margin.top - margin.bottom;
+
+    var svg = d3
+      .select("body")
+      .append("svg")
+      .attr("id", "svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var palette = ["#E76F51", "#F4A261", "#E9C46A", "#2A9D8F", "#264653"];
+    var colorScale = d3
+      .scaleLinear()
+      .domain(d3.range(5))
+      .range(palette);
+
+    //filtering path
+    var snap = Snap("#svg");
+    var path = snap
+      .path(
+        "M400 0 L260 200 L540 200 Z M260 200 L120 400 L400 400 Z M540 200 L400 400 L680 400 Z"
+      )
+      .attr({
+        fill: "red",
+        "fill-opacity": "0"
+      });
+
+    var bbox = path.getBBox();
+    var n_circle = 800;
+    var randomData = function() {
+      var dataset = [];
+      for (var i = 0; i < n_circle; i++) {
+        var x = d3.randomUniform(bbox.x, bbox.x + bbox.width)();
+        var y = d3.randomUniform(0, bbox.height)();
+        var r = d3.randomUniform(2, 12)();
+        dataset.push({ x, y, r });
+      }
+      return dataset;
+    };
+
+    var data = randomData();
+
+    var color = "#E76F51";
+    var triangleSize = 25;
+    var verticalTransform = Math.sqrt(triangleSize);
+
+    //draw circle
+    svg
+      .selectAll("dot")
+      .data(data)
+      .enter()
+      .append("circle")
+      .attr("r", d => d["r"])
+      .attr("cx", d => d["x"])
+      .attr("cy", d => d["y"])
+      .style("fill", d => colorScale(Math.floor(Math.random() * 5)))
+      .style("fill-opacity", function(d, i) {
+        return Snap.path.isPointInside(path, d["x"], d["y"]) ? "0.8" : "0";
+      });
+
+    //transition for radius
+    var update = function() {
+      var newRadius = [];
+      for (var i = 0; i < n_circle; i++) {
+        var r = d3.randomUniform(2, 12)();
+        newRadius[i] = r;
+      }
+
+      svg
+        .selectAll("circle")
+        .data(newRadius)
+        .transition()
+        .duration(600)
+        .ease(d3.easeCubic)
+        .attr("r", d => d);
+    };
+
+    //repeat
+    setInterval(function() {
+      update();
+    }, 512);
+  </script>
+</body>
