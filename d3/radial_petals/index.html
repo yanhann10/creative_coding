@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="utf-8">
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <style>
+  </style>
+</head>
+
+<body>
+  <script>
+    var margin = {
+        top: 10,
+        right: 10,
+        bottom: 10,
+        left: 10
+      },
+      width = 960 - margin.left - margin.right,
+      height = 640 - margin.top - margin.bottom;
+
+    var data = [
+      [2, 2, 3],
+      [33, 79, 92, 9, 1, 3],
+      [42],
+      [11, 19, 19, 1, 7, 12, 2, 7, 7, 4, 7, 3]
+    ];
+
+    var svg = d3.select('body')
+      .selectAll('svg')
+      .data(data).enter().append('svg')
+      .attr('width', 300)
+      .attr('height', 300)
+      .attr('id', 'background')
+      .append('g')
+      .attr('transform', 'translate(' + 150 + ',' + 150 + ')');
+
+    //gradient
+    var palettes = ["#a18cd1", "#fbc2eb"]
+    svg.append('defs')
+      .append("linearGradient")
+      .attr("x1", "0%")
+      .attr("y1", "0%")
+      .attr("x2", "0%")
+      .attr("y2", "100%")
+      .attr("id", "gradient")
+      .selectAll("stop")
+      .data(d3.range(2))
+      .enter().append("stop")
+      .attr("offset", (d, i) => 0 + 0.5 * i)
+      .attr("stop-color", (d, i) => palettes[i]);
+
+
+    //draw petals
+    var arcs = svg.append("g").attr("class", "arcs")
+    arcs
+      .selectAll("path")
+      .data(d3.pie().padAngle(.01))
+      .enter().append("path")
+      .attr("d", d3.arc()
+        .innerRadius(25)
+        .outerRadius(100)
+        .cornerRadius(150))
+      .style("fill", "url(#gradient)")
+      .style('fill-opacity', 0.8);
+  </script>
+</body>
