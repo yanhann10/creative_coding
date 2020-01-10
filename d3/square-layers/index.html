@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<style></style>
+
+<body>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="d3-grid.js"></script>
+  <script>
+    var rects = [];
+
+    /////////////////////////////////////////
+    //////////set up grid/////////////////////
+    /////////////////////////////////////////
+    var grid = d3
+      .grid()
+      .bands()
+      .size([360, 360])
+      .padding([1, 1]);
+    /////////////////////////////////////////
+    //////////set up background/////////////////////
+    /////////////////////////////////////////
+
+    var margin = {
+        top: 10,
+        right: 10,
+        bottom: 10,
+        left: 10
+      },
+      width = 960 - margin.left - margin.right,
+      height = 640 - margin.top - margin.bottom;
+
+    var svg = d3
+      .select("body")
+      .append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+      .style("fill", "black");
+
+    var sizeScale = d3
+      .scaleLinear()
+      .domain(d3.extent([1, 10]))
+      .range([0, 60]);
+
+    function update(data) {
+      var rect = svg.selectAll(".rect").data(grid(data));
+
+      //////////////////////////////////////////////////
+      //////////color/////////////////////
+      //////////////////////////////////////////////////
+      var col = ["#CC73FF", "#B026FF", "#8C1FCC", "#581380"];
+
+      //////////////////////////////////////////////////
+      //////////plot rectangles/////////////////////
+      //////////////////////////////////////////////////
+      rect
+        .enter()
+        .append("rect")
+        .attr("class", "rect")
+        .attr("width", d => sizeScale(d.size))
+        .attr("height", d => sizeScale(d.size))
+        .attr("transform", function(d) {
+          return "translate(" + (d.x + 360) + "," + d.y + ")";
+        })
+        .style("fill", col[0]);
+
+      rect
+        .enter()
+        .append("rect")
+        .attr("class", "rect")
+        .attr("width", d => sizeScale(d.size) * 0.8)
+        .attr("height", d => sizeScale(d.size) * 0.8)
+        .attr("transform", function(d) {
+          return "translate(" + (d.x + 360) + "," + d.y + ")";
+        })
+        .style("fill", col[1]);
+      rect
+        .transition()
+        .duration(1000)
+        .attr("width", d => sizeScale(d.size))
+        .attr("height", d => sizeScale(d.size));
+
+      rect
+        .enter()
+        .append("rect")
+        .attr("class", "rect")
+        .attr("width", d => sizeScale(d.size) * 0.6)
+        .attr("height", d => sizeScale(d.size) * 0.6)
+        .attr("transform", function(d) {
+          return "translate(" + (d.x + 360) + "," + d.y + ")";
+        })
+        .style("fill", col[2]);
+
+      rect
+        .enter()
+        .append("rect")
+        .attr("class", "rect")
+        .attr("width", d => sizeScale(d.size) * 0.3)
+        .attr("height", d => sizeScale(d.size) * 0.3)
+        .attr("transform", function(d) {
+          return "translate(" + (d.x + 360) + "," + d.y + ")";
+        })
+        .style("fill", col[3]);
+    }
+
+    function render() {
+      /////////////////////////////////////////
+      //////////random data/////////////////////
+      /////////////////////////////////////////
+      var data = d3.range(36).map(function(d) {
+        return {
+          id: d,
+          size: 1 + Math.floor(Math.random() * 9),
+          color: Math.random() > 0.5 ? "pink" : "pink"
+        };
+      });
+      update(data);
+    }
+
+    render();
+  </script>
+</body>
+
+//copyright @hannahyan
