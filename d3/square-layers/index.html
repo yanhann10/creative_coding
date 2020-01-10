@@ -8,6 +8,8 @@
   <script>
     var rects = [];
 
+
+
     /////////////////////////////////////////
     //////////set up grid/////////////////////
     /////////////////////////////////////////
@@ -36,34 +38,50 @@
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-      .style("fill", "black");
+
 
     var sizeScale = d3
       .scaleLinear()
       .domain(d3.extent([1, 10]))
       .range([0, 60]);
 
+
     function update(data) {
+
+
       var rect = svg.selectAll(".rect").data(grid(data));
 
       //////////////////////////////////////////////////
       //////////color/////////////////////
       //////////////////////////////////////////////////
-      var col = ["#CC73FF", "#B026FF", "#8C1FCC", "#581380"];
+      var col = ["#CC73FF", "#B026FF", "#8C1FCC", "#581380", "#11111"];
+
 
       //////////////////////////////////////////////////
       //////////plot rectangles/////////////////////
       //////////////////////////////////////////////////
+      // rect.selectAll("allRects")
+      //   .data(d3.range(4))
+      //   .enter().append("g")
+      //   .attr("id", (d, i) => "g" + i)
+      //   .selectAll('rect')
+      //   .data(data).enter()
+      //   .attr("width", d => sizeScale(d.size))
+      //   .attr("height", d => sizeScale(d.size))
+      //   .attr("transform", function (d) {
+      //     return "translate(" + (d.x + 360) + "," + d.y + ")";
+      //   })
+      //   .style("fill", col[0]);
       rect
         .enter()
         .append("rect")
         .attr("class", "rect")
         .attr("width", d => sizeScale(d.size))
         .attr("height", d => sizeScale(d.size))
-        .attr("transform", function(d) {
+        .attr("transform", function (d) {
           return "translate(" + (d.x + 360) + "," + d.y + ")";
         })
-        .style("fill", col[0]);
+        .style("fill", col[0])
 
       rect
         .enter()
@@ -71,15 +89,10 @@
         .attr("class", "rect")
         .attr("width", d => sizeScale(d.size) * 0.8)
         .attr("height", d => sizeScale(d.size) * 0.8)
-        .attr("transform", function(d) {
+        .attr("transform", function (d) {
           return "translate(" + (d.x + 360) + "," + d.y + ")";
         })
-        .style("fill", col[1]);
-      rect
-        .transition()
-        .duration(1000)
-        .attr("width", d => sizeScale(d.size))
-        .attr("height", d => sizeScale(d.size));
+        .style("fill", col[1])
 
       rect
         .enter()
@@ -87,28 +100,40 @@
         .attr("class", "rect")
         .attr("width", d => sizeScale(d.size) * 0.6)
         .attr("height", d => sizeScale(d.size) * 0.6)
-        .attr("transform", function(d) {
+        .attr("transform", function (d) {
           return "translate(" + (d.x + 360) + "," + d.y + ")";
         })
-        .style("fill", col[2]);
+        .style("fill", col[2])
+
 
       rect
         .enter()
         .append("rect")
         .attr("class", "rect")
-        .attr("width", d => sizeScale(d.size) * 0.3)
-        .attr("height", d => sizeScale(d.size) * 0.3)
-        .attr("transform", function(d) {
+        .attr("width", d => sizeScale(d.size) * 0.4)
+        .attr("height", d => sizeScale(d.size) * 0.4)
+        .attr("transform", function (d) {
           return "translate(" + (d.x + 360) + "," + d.y + ")";
         })
         .style("fill", col[3]);
+
+      rect
+        .enter()
+        .append("rect")
+        .attr("class", "rect")
+        .attr("width", d => sizeScale(d.size) * 0.2)
+        .attr("height", d => sizeScale(d.size) * 0.2)
+        .attr("transform", function (d) {
+          return "translate(" + (d.x + 360) + "," + d.y + ")";
+        })
+        .style("fill", col[4]);
     }
 
     function render() {
       /////////////////////////////////////////
       //////////random data/////////////////////
       /////////////////////////////////////////
-      var data = d3.range(36).map(function(d) {
+      var data = d3.range(36).map(function (d) {
         return {
           id: d,
           size: 1 + Math.floor(Math.random() * 9),
@@ -119,7 +144,6 @@
     }
 
     render();
+    //copyright @hannahyan
   </script>
 </body>
-
-//copyright @hannahyan
