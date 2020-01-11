@@ -1,36 +1,96 @@
 let n = 6;
 let r = 60;
-let angle = 360 / n;
+let n_hex = 20;
+let hexs = [];
+let palette = [
+  "#EFB605",
+  "#E47D06",
+  "#DB0131",
+  "#AF0158",
+  "#7F378D",
+  "#3465A8",
+  "#0AA174",
+  "#7EB852"
+];
 
 function setup() {
-  createCanvas(600, 600);
-  colorMode(HSB, 360, 100, 100);
-  frameRate(10);
+  angleMode(DEGREES);
+  createCanvas(800, 600);
+  for (i = 0; i < n_hex; i++) {
+    hexs[i] = new hexagon(
+      random(200, 600),
+      random(100, 500),
+      random(0, 1),
+      Math.floor(random(0, 8)),
+      60,
+      20,
+      40
+    );
+  }
+  noLoop();
 }
 
 function draw() {
-  background(255);
-  randomSeed(10);
-  let nX = 300 / r / 2;
-  let nY = 600 / r / 2;
-  let shiftX = map(mouseX, 0, 600, 1.8 * r, 2.5 * r);
-  for (let x = 0; x < nX; x++) {
-    for (let y = 0; y < nY; y++) {
-      let h = r * sin(radians(60));
-      hexagon(r + x * r * 3, r + 2 * h * y);
-      hexagon(shiftX + x * r * 3, r + h + 2 * h * y);
-    }
+  noStroke();
+  for (i = 0; i < n_hex; i++) {
+    hexs[i].display();
   }
 }
 
-function hexagon(x, y) {
-  beginShape(TRIANGLE_FAN);
-  vertex(x, y);
-  for (let i = 0; i <= n; i++) {
-    let pX = x + r * cos(radians(angle) * i);
-    let pY = y + r * sin(radians(angle) * i);
-    vertex(pX, pY);
-    fill(angle * i + 80, 50, 100);
+class hexagon {
+  constructor(x, y, fill, color, size = 60, innerR = 0, outerR = 60) {
+    this.x = x;
+    this.y = y;
+    this.fill = fill;
+    this.color = color;
+    this.size = size;
+    this.innerR = innerR;
+    this.outerR = outerR;
   }
-  endShape();
+  display() {
+    ////////////////////////////////
+    //////////Draw HEXAGON//////////
+    ////////////////////////////////
+    if (this.fill > 0.6) {
+      fill(color(palette[this.color]), 0.5);
+    } else {
+      noFill();
+      stroke(226, 178, 57);
+      strokeWeight(3);
+    }
+    beginShape();
+    push();
+
+    for (let i = 0; i <= n; i++) {
+      let pX = this.x + r * cos(60 * i);
+      let pY = this.y + r * sin(60 * i);
+      vertex(pX, pY);
+    }
+    if (this.fill >= 0.3) {
+      for (let i = 0; i <= n / 2; i++) {
+        let pX = this.x + r * cos(120 * i);
+        let pY = this.y + r * sin(120 * i);
+        line(this.x, this.y, pX, pY);
+      }
+    }
+
+    pop();
+    endShape(CLOSE);
+
+    if (this.fill < 0.3) {
+      noFill();
+    }
+    beginShape();
+    push();
+    strokeWeight(20);
+    if (this.fill < 0.3) {
+      for (let i = 0; i <= n; i++) {
+        let pXInner = this.x + this.innerR * cos(60 * i);
+        let pYInner = this.y + this.innerR * sin(60 * i);
+        vertex(pXInner, pYInner);
+      }
+    }
+    pop();
+    endShape(CLOSE);
+  }
 }
