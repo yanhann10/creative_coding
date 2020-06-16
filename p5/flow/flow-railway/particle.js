@@ -1,5 +1,5 @@
 // inspired by Daniel Shiffman's Coding Train video https://www.youtube.com/watch?v=BjoM9oKOAKY http://patreon.com/codingtrain
-// made modifications including particle initiation position and z direction varying speed
+// modified particle definition and shapes
 
 //gaussian random
 const randn_bm = () => {
@@ -11,12 +11,14 @@ const randn_bm = () => {
 };
 
 class Particle {
-  constructor() {
+  constructor(tempLineType, tempLineWidth) {
     this.pos = createVector(randn_bm() * width, randn_bm() * height);
     this.vel = createVector(randn_bm(), randn_bm());
     this.acc = createVector(0, 0);
     this.maxspeed = 4;
     this.h = 0;
+    this.linetype = tempLineType;
+    this.lineWidth = tempLineWidth;
     this.prevPos = this.pos.copy();
   }
 
@@ -47,9 +49,18 @@ class Particle {
       this.h = 0;
     }
 
-    strokeWeight(2);
+    var middleX = lerp(this.pos.x, this.prevPos.x, 0.5);
+    var middleY = lerp(this.pos.y, this.prevPos.y, 0.5);
 
-    line(this.pos.x, this.pos.y, this.prevPos.x, this.prevPos.y);
+    if (this.linetype === 1) {
+      strokeWeight(this.lineWidth);
+      line(this.pos.x, this.pos.y, middleX, middleY);
+    } else {
+      strokeWeight(2);
+      line(this.pos.x, this.pos.y, this.prevPos.x, this.prevPos.y);
+      strokeWeight(1);
+      line(this.pos.x - 15, this.pos.y, this.prevPos.x - 15, this.prevPos.y);
+    }
     this.updatePrev();
   }
 

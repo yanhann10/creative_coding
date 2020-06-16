@@ -40,14 +40,14 @@ class Particle {
   }
 
   show() {
-    var hue = map(this.h, 0, 150, 180, 255);
+    var hue = map(this.h, 0, 150, 160, 220);
     stroke(hue, 255, 255, 25);
     this.h = this.h + 1;
     if (this.h > 150) {
       this.h = 0;
     }
 
-    strokeWeight(2);
+    strokeWeight(1);
 
     line(this.pos.x, this.pos.y, this.prevPos.x, this.prevPos.y);
     this.updatePrev();

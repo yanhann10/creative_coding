@@ -1,5 +1,5 @@
 // inspired by Daniel Shiffman's Coding Train video https://www.youtube.com/watch?v=BjoM9oKOAKY http://patreon.com/codingtrain
-// made modifications including particle initiation position and z direction varying speed
+// made modifications including vector field design and z direction varying speed
 
 //gaussian random
 const randn_bm = () => {
@@ -47,7 +47,7 @@ class Particle {
       this.h = 0;
     }
 
-    strokeWeight(2);
+    strokeWeight(1);
 
     line(this.pos.x, this.pos.y, this.prevPos.x, this.prevPos.y);
     this.updatePrev();
