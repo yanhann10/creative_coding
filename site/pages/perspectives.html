@@ -1,119 +1,120 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/69/three.js"></script>
-    <script src="https://unpkg.com/three@0.104.0/examples/js/libs/stats.min.js"></script>
-    <script src="https://unpkg.com/geometric@1.1.1/build/geometric.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>
-    <script src="revolving.js"></script>
-    <style>
-      body {
-        margin: 0;
-        overflow: hidden;
-      }
-    </style>
-  </head>
 
-  <body>
-    <div id="stats"></div>
-    <div id="scene"></div>
-    <script>
-      //define gui
-      const controls = {
-        backgroundColor: "#f9cd00",
-        lightColor: "#fff",
-        rotate: false,
-      };
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/69/three.js"></script>
+  <script src="https://unpkg.com/three@0.104.0/examples/js/libs/stats.min.js"></script>
+  <script src="https://unpkg.com/geometric@1.1.1/build/geometric.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
 
-      //measure fps
-      const scene = new THREE.Scene();
+<body>
+  <div id="stats"></div>
+  <div id="scene"></div>
+  <script>
+    //define gui
+    const controls = {
+      backgroundColor: "#f9cd00",
+      lightColor: "#fff",
+      rotate: false,
+    };
 
-      const camera = ((_) => {
-        const camera = new THREE.PerspectiveCamera(
-          45,
-          innerWidth / innerHeight,
-          0.1,
-          1000
-        );
-        camera.position.set(-6, 1, -2);
-        camera.lookAt(scene.position);
-        return camera;
-      })();
+    //measure fps
+    const scene = new THREE.Scene();
 
-      const renderer = ((_) => {
-        const renderer = new THREE.WebGLRenderer();
-        renderer.setClearColor(controls.backgroundColor);
-        renderer.setSize(innerWidth, innerHeight);
-        renderer.shadowMapEnabled = true;
-        document.getElementById("scene").appendChild(renderer.domElement);
-        return renderer;
-      })();
+    const camera = ((_) => {
+      const camera = new THREE.PerspectiveCamera(
+        45,
+        innerWidth / innerHeight,
+        0.1,
+        1000
+      );
+      camera.position.set(-6, 1, -2);
+      camera.lookAt(scene.position);
+      return camera;
+    })();
 
-      const geo = new THREE.BoxGeometry(2, 2, 2);
-      const leftDoorGroup = new THREE.Group();
-      for (let i = 0; i < 16; i++) {
-        const box = new THREE.Mesh(
-          geo,
-          new THREE.MeshPhongMaterial({
-            color: "white",
-          })
-        );
-        box.castShadow = true;
+    const renderer = ((_) => {
+      const renderer = new THREE.WebGLRenderer();
+      renderer.setClearColor(controls.backgroundColor);
+      renderer.setSize(innerWidth, innerHeight);
+      renderer.shadowMapEnabled = true;
+      document.getElementById("scene").appendChild(renderer.domElement);
+      return renderer;
+    })();
 
-        box.rotateY(Math.PI / 6);
+    const geo = new THREE.BoxGeometry(2, 2, 2);
+    const leftDoorGroup = new THREE.Group();
+    for (let i = 0; i < 16; i++) {
+      const box = new THREE.Mesh(
+        geo,
+        new THREE.MeshPhongMaterial({
+          color: "white",
+        })
+      );
+      box.castShadow = true;
 
-        box.position.set(0, i * 0.2 - 1.5, 0);
+      box.rotateY(Math.PI / 6);
 
-        box.scale.set(1.8, 0.03, 0.1);
-        leftDoorGroup.add(box);
-      }
+      box.position.set(0, i * 0.2 - 1.5, 0);
 
-      const rightDoorGroup = new THREE.Group();
-      for (let i = 0; i < 16; i++) {
-        const box = new THREE.Mesh(
-          geo,
-          new THREE.MeshPhongMaterial({
-            color: "white",
-          })
-        );
-        box.castShadow = true;
+      box.scale.set(1.8, 0.03, 0.1);
+      leftDoorGroup.add(box);
+    }
 
-        box.position.set(0, i * 0.2 - 1.5, -1);
+    const rightDoorGroup = new THREE.Group();
+    for (let i = 0; i < 16; i++) {
+      const box = new THREE.Mesh(
+        geo,
+        new THREE.MeshPhongMaterial({
+          color: "white",
+        })
+      );
+      box.castShadow = true;
 
-        box.scale.set(1.8, 0.03, 0.1);
-        rightDoorGroup.add(box);
-      }
-      scene.add(leftDoorGroup);
-      scene.add(rightDoorGroup);
+      box.position.set(0, i * 0.2 - 1.5, -1);
 
-      const directionallight = ((_) => {
-        const directionallight = new THREE.DirectionalLight(
-          controls.lightColor,
-          1
-        );
-        directionallight.position.set(0, 4, 0);
-        directionallight.castShadow = true;
-        scene.add(directionallight);
-        return directionallight;
-      })();
+      box.scale.set(1.8, 0.03, 0.1);
+      rightDoorGroup.add(box);
+    }
+    scene.add(leftDoorGroup);
+    scene.add(rightDoorGroup);
 
-      function render() {
-        requestAnimationFrame(render);
+    const directionallight = ((_) => {
+      const directionallight = new THREE.DirectionalLight(
+        controls.lightColor,
+        1
+      );
+      directionallight.position.set(0, 4, 0);
+      directionallight.castShadow = true;
+      scene.add(directionallight);
+      return directionallight;
+    })();
 
-        leftDoorGroup.rotation.y += 0.01;
-        rightDoorGroup.rotation.y -= 0.01;
+    function render() {
+      requestAnimationFrame(render);
 
-        camera.lookAt(scene.position);
-        renderer.render(scene, camera);
-      }
-      render();
+      leftDoorGroup.rotation.y += 0.01;
+      rightDoorGroup.rotation.y -= 0.01;
 
-      function resize() {
-        camera.aspect = innerWidth / innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(innerWidth, innerHeight);
-      }
-      onresize = resize;
-    </script>
-  </body>
+      camera.lookAt(scene.position);
+      renderer.render(scene, camera);
+    }
+    render();
+
+    function resize() {
+      camera.aspect = innerWidth / innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(innerWidth, innerHeight);
+    }
+    onresize = resize;
+  </script>
+</body>
+
 </html>
