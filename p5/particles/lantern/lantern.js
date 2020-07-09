@@ -1,7 +1,7 @@
 let lanterns = [];
 let num_lanterns = 80;
-let w = 800;
-let h = 400;
+let w = innerWidth;
+let h = innerHeight;
 
 function setup() {
   createCanvas(w, h);
@@ -11,7 +11,7 @@ function setup() {
       random(-1.5 * w, 1.5 * w),
       random(h, 2 * h),
       random(8, 14), //size
-      random(1, 3), //speed
+      random(1, 2.5), //speed
       100, //direction
       random(-4, 4) / 10 //tilt angle
     );
@@ -26,6 +26,31 @@ function draw() {
     lanterns[i].display();
     lanterns[i].move(frameCount / 20);
   }
+
+  fill(255);
+  textFont("Poppins");
+  textSize(16);
+  text(
+    "Sky lantern was first invented by an ancient polymath for communication during wartime. ",
+    16,
+    16
+  );
+  text(
+    "Some believe it stems from the tradition of Buddhism instead. ",
+    16,
+    36
+  );
+  text(
+    "Later on, the meaning has gradually evolved across different parts of Asia.",
+    16,
+    56
+  );
+  text(
+    "But oftentimes it is related to wishing for good fortune and shedding bad luck.",
+    16,
+    76
+  );
+  text("Click to release one into your night sky.", 16, 96);
 }
 
 class lantern {
@@ -65,7 +90,7 @@ class lantern {
     if (dst < 120) {
       fill(shade * 167, shade * 34, shade * 110);
     }
-
+    push();
     rotate(this.tilt);
     quad(
       this.x - this.width,
@@ -84,6 +109,7 @@ class lantern {
     //the flame
     fill(250, 239, 129);
     ellipse(this.x, this.y, this.width / 5, (0.4 * this.width) / 3);
+    pop();
   }
 }
 

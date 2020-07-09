@@ -1,14 +1,36 @@
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.dom.min.js"></script>
-    <script src="feather.js"></script>
-    <link rel="stylesheet" href="css/custom.css">
-    <link href="https://fonts.googleapis.com/css?family=Vollkorn:600" rel="stylesheet">
-    <script></script>
-  </head>
-  <body>
-   
-  </body>
+
+<head>
+  <meta charset="UTF-8">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.dom.min.js"></script>
+  <script src="feather.js"></script>
+  <link rel="stylesheet" href="css/custom.css">
+  <link href="https://fonts.googleapis.com/css?family=Vollkorn:600" rel="stylesheet">
+  <script></script>
+  <style>
+    button {
+      background: orange;
+      padding: .5em;
+      border-radius: 12px;
+      text-decoration: none;
+      border: none;
+      font-size: 12px;
+      transition: all 0.2s ease-in-out;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: darkorange;
+      transition: all 0.2s ease-in-out;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="glow">
+    <button onClick="window.location.reload();">Regenerate</button>
+  </div>
+</body>
+
 </html>
