@@ -1,0 +1,105 @@
+---
+title: "Lissou search trends"
+output: html_notebook
+---
+
+ 
+
+```{r}
+library(tidyverse)
+library(mathart)
+library(paletteer)
+library(transformr)
+library(tweenr)
+library(gganimate)
+library(viridis)
+library(Rcpp)
+library(mathart)
+library(gtrendsR)
+my_theme <- function(base_size = 12, base_family = "Helvetica") {
+  theme_void() +
+    theme(aspect.ratio = 1) +
+    theme(
+      axis.title.y = element_blank(), axis.title.x = element_blank(),
+      plot.background = element_rect(fill = "ghostwhite", color = "white"),
+      legend.position = "None", legend.title = element_blank()
+    )
+}
+```
+
+
+```{r data}
+df_vac <- gtrends(c("vaccine"), time = "today 12-m", onlyInterest = T)$interest_over_time %>% mutate(id=as.character(row_number())) %>% 
+  select(id, date, hits)
+ts_vac <- df_vac$hits
+```
+
+```{r lissajous animate}
+set.seed(1)
+df <- ts_vac %>% map_df(~ lissajous(a = .x/10, A = 0.5), .id = "id") %>%
+  left_join(df_vac, by='id')
+
+anim <- ggplot() +
+  geom_path(aes(x, y,color=hits), df, size = 0.85, lineend = "round") +
+  transition_states(
+    state = id,
+    transition_length = 50,
+    state_length = 0, wrap = T
+  ) +
+  labs(title = 'Cylinders: {date}') +
+  scale_color_viridis(option = "B") +
+  coord_equal() +
+  theme_blankcanvas(margin_cm = 1)
+
+#anim_save('lissou_w_txt.gif', anim)
+
+```
+
+```{r rosepetal}
+df <- data.frame(x = numeric(0), y = numeric(0), n = integer(0), d = integer(0))
+
+for (n in 1:10) {
+  for (d in 1:10) {
+    result <- rose_curve(n, d) %>% mutate(n = n, d = d)
+    df <- rbind(df, result)
+  }
+}
+df <- df %>%
+  mutate(nd = paste(n, d)) %>%
+  mutate(id = as.numeric(factor(nd))) %>%
+  mutate(
+    time = rep(1, nrow(df)),
+    group = rep(1, nrow(df)), ease = rep("quadratic-out", nrow(df))
+  )
+# ggplot() +
+#   geom_path(aes(x, y), df, size = 0.35, lineend = "round") +
+#   facet_grid(d ~ n) +
+#   coord_equal() +
+#   theme_blankcanvas(margin_cm = 1)
+```
+
+```{r}
+df_tween <- tween_elements(df, "time", "id", "ease", nframes = 10)
+ggplot() +
+  geom_path(aes(x, y), df_tween, size = 0.35, lineend = "round") +
+  transition_states(id,
+    transition_length = 0.8,
+    state_length = 0, wrap = T
+  )
+coord_equal() +
+  theme_blankcanvas(margin_cm = 1)
+```
+
+```{r lorenz}
+
+df <- lorenz_attractor(a = 12, b = 8 / 3, c = 18, n = 10000)
+
+ggplot() +
+  geom_path(aes(x, z, color = x), df, alpha = 0.65, size = 0.03) +
+  coord_equal() +
+  xlim(-25, 25) +
+  ylim(2.5, 52.5) +
+  scale_color_viridis(option = "inferno") +
+  my_theme() +
+  theme_blankcanvas(margin_cm = 0)
+```
