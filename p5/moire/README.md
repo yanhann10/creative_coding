@@ -1,3 +1,3 @@
 # Interference patterns
 
-###![](assets/moire.gif)
+![](assets/moire.gif)
